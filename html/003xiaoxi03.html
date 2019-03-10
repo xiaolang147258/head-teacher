@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <!-- import CSS -->
+   <script src="../js/vue.js"></script>    
+ <!--解决ui组件不适配问题-->
+ <meta  charset="utf-8" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<!--移动适配-->  
+ <script type="text/javascript" src="../js/yidong.js"></script>
+ <link rel="stylesheet" type="text/css" href="../css/yidong.css"/>
+  
+ <script src="../node_modules/_vant@1.3.5@vant/lib/vant.js"></script>
+ <link rel="stylesheet" href="../node_modules/_vant@1.3.5@vant/lib/vant-css/index.css">
+ 	<!--<link rel="stylesheet" href="https://unpkg.com/vant/lib/vant-css/index.css">
+  <script src="https://unpkg.com/vant/lib/vant.min.js"></script>-->
+  
+  <style type="text/css">
+  	body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div{margin:0;padding:0;border:0;} body{background:#fff;color:#333;font-size:12px; }  ul,ol{list-style-type:none;} select,input,img,select{vertical-align:middle;}  a{text-decoration:none;} a:link{color:#009;} a:visited{color:#800080;} a:hover,a:active,a:focus{color:#c00;text-decoration:underline;}
+  		div{box-sizing: border-box;}
+  		.tab{
+  			 width: 100%;
+  			 height: 1.414285rem;
+  			 border-top: 0.014285rem solid #DEDEDE;
+  			 line-height: 1.414285rem;
+  			 padding-left: 0.428571rem;
+  			 padding-right: 0.428571rem;
+  			 background: white;
+  		}
+  		.trs{
+  			 font-size: 0.457142rem;
+  			 float: left;
+  		}
+  		.tds{
+  			 font-size: 0.4rem;
+  			 color: #999999;
+  			 float: right;
+  		}
+  		.btns{
+  			  width: 100%;
+  			  height: 1.4rem;
+  			  background: #61BAFC;
+  			  color: white;
+  			  text-align: center;
+  			  line-height: 1.4rem;
+  			  font-size: 0.514285rem;
+  			  position: fixed;
+  			  z-index: 3;
+  			  bottom: 0;
+  			  left: 0;
+  		}
+  		#values{
+  			 width: 100%;
+  			 padding:0.428571rem 0.428571rem; 
+  			 font-size: 0.4rem;
+  			 line-height:0.857142rem
+  		}
+  		*{
+  		 font-family: 'FangSong_GB2312';
+  	  }
+  	  #mengs{
+  	background:rgba(255,255,255,0.95);
+  	 /*height: 6.666666rem;*/
+  	 width: 100%;
+  	 height: 100%;
+  	 position: fixed;
+  	 top: 0;
+  	 left: 0;
+  	 z-index: 500;
+  	 /*transition: 0.3s;*/
+  }
+  #ales{
+  	 width: 6.333333rem;
+  	 height: 6.333333rem;
+  	 margin: 4.333333rem auto;
+  	 position: relative;
+  }
+  #mengs div img{
+  	width: 100%;
+  	height: 100%;
+  }
+   #mengs div p{
+   	  font-size:0.4rem;
+   	  color: #61BAFC;
+   	  font-family:'Microsoft JhengHei';
+   	  font-weight: 600;
+   }
+   #p_bs{
+   	  width: 100%;
+   	  height: 0.4rem;
+   	  line-height: 0.4rem;
+   	  text-align: center;
+   	  position: absolute;
+   	  left: 0;
+   	  /*bottom: 0;*/
+   }	
+    *{
+    	 font-family:'Microsoft JhengHei';
+    }
+  </style>
+</head>
+<body style="height: 100%;">
+	<!--body设置高度为100%div设置高度为100%时高度就是视口的高度-->
+	 <div id='mengs'>
+	 	 <div id="ales">
+	 		 <img src="../img/gif/0147d85b320ba0a80120b959abcc40.gif"/>
+	 		    <div id="p_bs"><p>加载中...</p></div>
+	 	   </div>
+	 </div>
+	
+	<!--
+		js:
+		
+		$('#mengs').fadeOut(300);
+	 
+	-->
+	
+  <div id="app" style="width: 100%;float:left;background: #F5F5F5;">
+  	
+  	 <div v-if="html_show">
+  	 	   <div class="tab"><p class="trs">学生姓名</p><p class="tds">{{name_chile}}</p></div>
+  	 	   <div class="tab"><p class="trs">所在班级</p><p class="tds">{{class_s}}</p></div>
+  	 	   <div class="tab"><p class="trs">家长姓名</p><p class="tds">{{name_faze}}</p></div>
+  	 	   <div class="tab"><p class="trs">家长电话</p><p class="tds">{{iphone}}</p></div>
+  	 	   <div class="tab"><p class="trs">申请时间</p><p class="tds">{{datess}}</p></div>
+  	 	   <div class="tab"><p class="trs">{{liyou}}：</p></div>
+  	 	   <div style="width: 100%;background:white;font-size:0.4rem;padding: 0 0.266666rem 0.466666rem 2.76666rem;text-align:justify;line-height:0.766666rem;border-bottom: 0.013333rem solid #DEDEDE;">
+  	 	   	        {{reason}}
+  	 	   </div>
+  	 </div>
+  	 
+  	 <div v-else id="values">
+  	 	      本周学习的内容，我们一起来温故而知新！请本周学习的内容，我们一起来温故而知我们一起来温…本周学习的内容，我们一起来温故而知新！请本周学习的内容，我们一起来温故而知我们一起来温…
+  	 </div>
+  	    	  
+  	 <!--<div @click="Read" class="btns">已读</div>-->     
+  	 	  
+  </div>
+</body>
+   <script type="text/javascript" src="../js/jq.js"> </script>
+   	
+  <script src="../js/vuex.js"></script>
+   <script src="../js/axios.js"></script>
+  <script>
+  	
+  	//控制微信浏览器回退按钮，跳转至指定页面
+  	pushHistory();
+        window.addEventListener("popstate",function(e){
+            location.href='003xiaoxi_02.html';
+        });
+        function pushHistory(){ 
+        var state = { 
+            title: "title", 
+            url: "#"
+        }; 
+        window.history.pushState(state, "title", "#"); 
+    } 
+  	
+    new Vue({
+      el: '#app',
+      data: function(){
+        return {
+        	 html_show:true,
+        	 liyou:'',
+        	 urls:'',
+        	 
+        	 name_chile:'',//学生姓名
+        	 class_s:'',//所在班级
+        	 name_faze:'',//家长姓名
+        	 iphone:'',//家长电话
+        	 datess:'',//申请时间
+        	 reason:'',//理由
+        	 
+        }
+      },
+      
+      methods:{
+      	 Read(){//点击已读按钮事件
+      	 	  location.href = './003xiaoxi_02.html' 
+      	 },
+        get_act(){
+      		  axios.get(Main_domain_name+this.urls+localStorage.trv_id+'&api_token='+localStorage.api_token
+        	      ).then(res=>{
+        	      	 if(res.data.code==200){
+        	      	 	    console.log(res.data);
+        	      	 	   if(res.data.data.LeaveView){
+        	      	 	   	this.name_chile = res.data.data.LeaveView.surname
+        	      	 	    this.class_s = res.data.data.LeaveView.title
+        	      	 	    this.name_faze = res.data.data.LeaveView.parent_surname
+        	      	 	    this.iphone = res.data.data.LeaveView.telephone
+        	      	 	    this.datess = res.data.data.LeaveView.created_at
+        	      	 	    this.reason = res.data.data.LeaveView.site
+        	      	 	   }else if(res.data.data.RefundsView){
+        	      	 	   	this.name_chile = res.data.data.RefundsView.surname
+        	      	 	    this.class_s = res.data.data.RefundsView.title
+        	      	 	    this.name_faze = res.data.data.RefundsView.parent_surname
+        	      	 	    this.iphone = res.data.data.RefundsView.telephone
+        	      	 	    this.datess = res.data.data.RefundsView.created_at
+        	      	 	    this.reason = res.data.data.RefundsView.site
+        	      	 	   }
+        	      	 	   
+        	      	 	   $('#mengs').fadeOut(300);
+        	      	 }else{
+        	      		  vant.Toast('Something went wrong.(发生了错误 )');
+        	      	 }
+                }).catch(err=>{
+                      console.log(err);
+              }); 
+      	   },
+      },
+      mounted(){
+      	 document.getElementsByTagName('title')[0].innerHTML = localStorage.titles;
+      	 
+      	if(localStorage.titles=='退款记录'){
+      		  this.liyou = '退款理由'
+      		  this.urls = '/api/course/trust-refunds-view?id='
+      	}else if(localStorage.titles=='请假记录'){
+      		  this.liyou = '请假理由'
+      		  this.urls = '/api/course/trust-leave-view?id='
+      	}
+      	this.get_act()
+      	
+//    	 this.html_show = (localStorage.titles=='课程请假')?true:(localStorage.titles=='系统消息')?false:''
+      	 
+      	document.getElementById('app').style.height = document.documentElement.clientHeight+'px';
+      }
+    })
+  </script>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title id="title">消息通知</title>
+  <!-- import CSS -->
+   <script src="../js/vue.js"></script>    
+ <!--解决ui组件不适配问题-->
+ <meta  charset="utf-8" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<!--移动适配-->  
+ <script type="text/javascript" src="../js/yidong.js"></script>
+ <link rel="stylesheet" type="text/css" href="../css/yidong.css"/>
+  
+ <script src="../node_modules/_vant@1.3.5@vant/lib/vant.js"></script>
+ <link rel="stylesheet" href="../node_modules/_vant@1.3.5@vant/lib/vant-css/index.css">
+ 	<!--<link rel="stylesheet" href="https://unpkg.com/vant/lib/vant-css/index.css">
+  <script src="https://unpkg.com/vant/lib/vant.min.js"></script>-->
+  
+  <style type="text/css">
+  	body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div{margin:0;padding:0;border:0;} body{background:#fff;color:#333;font-size:12px; }  ul,ol{list-style-type:none;} select,input,img,select{vertical-align:middle;}  a{text-decoration:none;} a:link{color:#009;} a:visited{color:#800080;} a:hover,a:active,a:focus{color:#c00;text-decoration:underline;}
+  		div{box-sizing: border-box;}
+  		#app2{
+  			 width:100%;
+  			 background: white;
+  			 margin: 0 auto;
+  			 padding-left: 0.428571rem;
+  		}
+  		.xiang{
+  			 width:9.185714rem;
+  			 height: 2.685714rem;
+  			 /*background: red;*/
+  			border-bottom:0.014285rem solid rgba(222,222,222,1);
+  			padding-top: 0.428571rem;;
+  			
+  		}
+  		.img_box{
+  			width: 1.4rem;
+  			height: 1.4rem;
+  			/*margin-top: 0.428571rem;*/
+  			/*background: #44DB5E;*/
+  			float: left;
+  			position: relative;
+  		}
+  		.title_box{
+  			 width: 7.04285rem;
+  			 height: 1.842857rem;
+  			 /*background: red;*/
+  			 float: left;
+  			 margin-left: 0.285714rem;
+  		}
+  		.top{
+  			font-size: 0.4rem;
+  			float: left;
+  		}
+  		.date{
+  			 font-size: 0.314285rem;
+  			 color: #999999;
+  			 float: right;
+  		}
+  		.p_box{
+  			 width: 100%;
+  			 height: 1.014285rem;
+  			 font-size: 0.342857rem;
+  			 float: left;
+  			 margin-top: 0.142857rem;
+  			line-height: 0.571428rem;
+  			color: #999999;
+  			 /*overflow: hidden;*/
+  			 display: -webkit-box;  
+		display: -moz-box;  
+		overflow: hidden;  
+		text-overflow: ellipsis;  
+		word-break: break-all;  
+		-webkit-box-orient: vertical;  
+		-webkit-line-clamp:2;
+  		}
+  		#Little_red_spot{
+  			width: 0.285714rem;
+  			height: 0.285714rem;
+  			background: #FC6161;
+  			border-radius: 50%;
+  			position: absolute;
+  			top:-0.142857rem;
+  			right: -0.142857rem;
+  			z-index: 3;
+  		}
+  		*{
+  		 font-family: 'FangSong_GB2312';
+  	}	
+  	#mengs{
+  	background:rgba(255,255,255,0.95);
+  	 /*height: 6.666666rem;*/
+  	 width: 100%;
+  	 height: 100%;
+  	 position: fixed;
+  	 top: 0;
+  	 left: 0;
+  	 z-index: 500;
+  	 /*transition: 0.3s;*/
+  }
+  #ales{
+  	 width: 6.333333rem;
+  	 height: 6.333333rem;
+  	 margin: 4.333333rem auto;
+  	 position: relative;
+  }
+  #mengs div img{
+  	width: 100%;
+  	height: 100%;
+  }
+   #mengs div p{
+   	  font-size:0.4rem;
+   	  color: #61BAFC;
+   	  font-family:'Microsoft JhengHei';
+   	  font-weight: 600;
+   }
+   #p_bs{
+   	  width: 100%;
+   	  height: 0.4rem;
+   	  line-height: 0.4rem;
+   	  text-align: center;
+   	  position: absolute;
+   	  left: 0;
+   	  /*bottom: 0;*/
+   }
+    *{
+    	 font-family:'Microsoft JhengHei';
+    }
+  </style>
+</head>
+<body style="height: 100%;">
+	<!--body设置高度为100%div设置高度为100%时高度就是视口的高度-->
+	 <div id='mengs'>
+	 	 <div id="ales">
+	 		 <img src="../img/gif/0147d85b320ba0a80120b959abcc40.gif"/>
+	 		    <div id="p_bs"><p>加载中...</p></div>
+	 	   </div>
+	 </div>
+	
+	<!--
+		js:
+		
+		$('#mengs').fadeOut(300);
+	 
+	-->
+	
+	
+	
+	
+  <div id="app" style="width: 100%;float:left;background: #F5F5F5;">
+  	<van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+  	    <div id="app2">
+  	    	
+  	 	   <!--<div @click="this_click('系统通知')" class="xiang">-->
+  	 	   	  <!--图片容器-->
+  	 	   	   <!--<div class="img_box">-->
+  	 	   	   	<!--小红点-->
+  	 	   	   	  <!--<div id="Little_red_spot"></div>-->
+  	 	   	   <!--</div-->
+  	 	   	   <!--<div class="title_box">-->
+  	 	   	   	    <!--<p class="top">系统通知</p><p class="date">18:21</p>-->
+  	 	   	   	     <!--<div class="p_box">-->
+  	 	   	   	    	 <!--本周学习的内容，我们一起来温故而知新！请本周学习的内容，我们一起来温故而知我们一起来温…-->
+  	 	   	   	    <!--</div>-->
+  	 	   	   <!--</div>-->
+  	 	   <!--</div>-->
+  	 	   
+  	 	   <div v-for="(i,index) in all_act" @click="this_click(i)" class="xiang">
+  	 	   	  <!--图片容器-->
+  	 	   	   <div class="img_box">
+  	 	   	   	  <img style="width: 100%;height:100%;" v-show="type_img==0" src="../img/banwu_img/tuikuan_20181130163516.png"/>
+  	 	   	   	   <img style="width: 100%;height:100%;" v-show="type_img==1" src="../img/banwu_img/qingjia_20181130163525.png"/>
+  	 	   	   	<!--小红点-->
+  	 	   	   	  <!--<div id="Little_red_spot"></div>-->
+  	 	   	   </div>
+  	 	   	   
+  	 	   	   <div class="title_box">
+  	 	   	   	    <p class="top">{{i.title}}-{{i.surname}}</p><p class="date">{{i.created_at.substr(5,2)}}月{{i.created_at.substr(8,2)}}日</p>
+  	 	   	   	    <div class="p_box">
+  	 	   	   	    	  {{i.site}}
+  	 	   	   	    </div>
+  	 	   	   </div>
+  	 	   </div>
+  	 	  
+  	 </div>
+  	 </van-pull-refresh>
+  </div>
+</body>
+
+  <script type="text/javascript" src="../js/jq.js"></script>
+  <script src="../js/vuex.js"></script>	
+  
+  <script src="../js/axios.js"></script>
+  <script>
+  	//控制微信浏览器回退按钮，跳转至指定页面
+  	pushHistory();
+        window.addEventListener("popstate",function(e){
+            location.href='003xiaoxi.html'
+        });
+        function pushHistory(){
+        var state = { 
+            title:"title", 
+            url:"#"
+        }; 
+        window.history.pushState(state,"title","#"); 
+    } 
+  	
+    new Vue({
+      el: '#app',
+      data: function(){
+        return{
+        	all_act:[],
+        	isLoading: false,
+        	list:[1,1,1,1,1,1,1,1,1,1],
+        	type_lei:'',
+        	
+        	type_img:0,
+        }
+      },
+      
+      methods:{
+      	get_act(){
+      		  axios.get(Main_domain_name+this.type_lei+localStorage.api_token
+        	      ).then(res=>{
+        	      	 if(res.data.code==200){
+        	      	 	    console.log(res.data);
+        	      	 	    
+                       if(res.data.data.LeaveList){
+                       	  if(res.data.data.LeaveList.length!=0){
+                       	  	  this.all_act = res.data.data.LeaveList;
+        	      	 	          console.log(this.all_act)
+                       	  }else{
+                       	  	  this.$toast({
+        	      	 	    	    message:'暂时没有请假记录！',
+        	      	 	    	    duration:1000
+        	      	 	    	    });
+        	      	 	    	    window.setTimeout(()=>{
+                    	  	       location.href = './003xiaoxi.html'
+                    	        },1000)
+                       	  }
+                       }
+                       if(res.data.data.RefundsList){
+                       	  if(res.data.data.RefundsList.length!=0){
+                       	  	  this.all_act = res.data.data.RefundsList;
+        	      	 	         console.log(this.all_act)
+                       	  }else{
+                       	  	  this.$toast({
+        	      	 	    	    message:'暂时没有退款记录！',
+        	      	 	    	    duration:1000
+        	      	 	    	    });
+        	      	 	    	    window.setTimeout(()=>{
+                    	  	       location.href = './003xiaoxi.html'
+                    	        },1000)
+                       	  }
+                       	   
+                       }
+                       
+        	      	 	   $('#mengs').fadeOut(300); 
+        	      	 }else{
+        	      		  vant.Toast('Something went wrong.(发生了错误 )');
+        	      	 }
+                }).catch(err=>{
+                      console.log(err);
+              }); 
+      	   },
+        
+      	 this_click(i){
+      	 	   localStorage.trv_id = i.id;
+      	 	   location.href = './003xiaoxi03.html'
+      	 },
+      	
+      	 onRefresh(){//下拉刷新数据
+      setTimeout(()=>{
+        this.$toast({message:'刷新成功',duration:800});
+        this.isLoading = false;
+        this.count++;
+       },500);
+      },
+      },
+      mounted(){
+      	document.getElementById('title').innerHTML = localStorage.titles
+      	if(localStorage.titles=='退款记录'){
+      		  this.type_img = 0
+      		  this.type_lei = '/api/course/trust-refunds?api_token=' 
+      	}else if(localStorage.titles=='请假记录'){
+      		  this.type_img = 1
+      		  this.type_lei = '/api/course/trust-leave?api_token='
+      	}
+      	this.get_act()
+      	document.getElementById('app').style.height = document.documentElement.clientHeight+'px';
+      }
+      
+    })
+  </script>
+</html>

@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>添加学生</title>
+  <!-- import CSS -->
+  
+  <script src="../js/vue.js"></script>    
+ <!--解决ui组件不适配问题-->
+ <meta  charset="utf-8" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+<!--移动适配-->  
+ <script type="text/javascript" src="../js/yidong.js"></script>
+ <link rel="stylesheet" type="text/css" href="../css/yidong.css"/>
+ 
+ <script src="../node_modules/_vant@1.3.5@vant/lib/vant.js"></script>
+ <link rel="stylesheet" href="../node_modules/_vant@1.3.5@vant/lib/vant-css/index.css">
+  
+  <!--<link rel="stylesheet" href="https://unpkg.com/vant/lib/vant-css/index.css">
+  <script src="https://unpkg.com/vant/lib/vant.min.js"></script>-->
+  
+  <style type="text/css">
+  	body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div{margin:0;padding:0;border:0;} body{background:#fff;color:#333;font-size:12px;font-family:"Arial Narrow";}  ul,ol{list-style-type:none;} select,input,img,select{vertical-align:middle;}  a{text-decoration:none;} a:link{color:#009;} a:visited{color:#800080;} a:hover,a:active,a:focus{color:#c00;text-decoration:underline;}
+  		
+  		div{box-sizing: border-box};
+  		
+  		*{
+  			font-family: "微软雅黑";
+  			margin: 0;
+  			padding: 0;
+  		}
+  		
+    #app{
+    	width: 100%;
+    	background: #F5F5F5;
+    }
+    .tab{
+        width: 100%;
+        height: 1.293333rem;
+        border-top:0.013333rem solid #DEDEDE;
+        line-height:1.293333rem;
+        font-size: 0.4rem;
+        padding: 0 0.4rem;
+        background: white;
+    }
+    .left_p{
+    	float: left;
+    	color: #999999;
+    }
+    .vaules{
+    	float: right;
+    	/*color: #DEDEDE;*/
+    	border: none;
+    	height: 100%;
+    	width: 5.013333rem;
+    	font-size: 0.4rem;
+    	text-align: center;
+    }
+    .right_img{
+    	 float: right;
+    	 width: 0.346666rem;
+    	 height: 0.373333rem;
+    	 margin-top: 0.466666rem;
+    	 /*margin-left: 0.24rem;*/
+    }
+    .right_imgs{
+    	 width: 0.173333rem;
+    	 height: 0.32rem;
+    	 margin-top: 0.463333rem;
+    	 margin-left: 0.2rem;
+    	 float: right;
+    }
+    .p_box{
+    	 width: 7rem;
+    	 float: right;
+    	 color: #DEDEDE;
+    	 text-align: center;
+    	 overflow: hidden;
+       text-overflow:ellipsis;
+        white-space: nowrap;
+    }
+    .btn{
+    	 width: 100%;
+    	 height: 1.306666rem;
+    	 text-align: center;
+    	 line-height: 1.306666rem;
+    	 font-size: 0.48rem;
+    	 color: white;
+    	 position: absolute;
+    	 bottom: 0;
+    	 left: 0;
+    }
+    
+    /*修改输入框提示语字体颜色*/
+    :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #DEDEDE;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #DEDEDE;
+}
+
+input:-ms-input-placeholder{
+    color: #DEDEDE;
+}
+
+input::-webkit-input-placeholder{
+    color: #DEDEDE;
+}
+#mengs{
+  	background:rgba(255,255,255,0.95);
+  	 /*height: 6.666666rem;*/
+  	 width: 100%;
+  	 height: 100%;
+  	 position: fixed;
+  	 top: 0;
+  	 left: 0;
+  	 z-index: 500;
+  	 /*transition: 0.3s;*/
+  }
+  #ales{
+  	 width: 6.333333rem;
+  	 height: 6.333333rem;
+  	 margin: 4.333333rem auto;
+  	 position: relative;
+  }
+  #mengs div img{
+  	width: 100%;
+  	height: 100%;
+  }
+   #mengs div p{
+   	  font-size:0.4rem;
+   	  color: #61BAFC;
+   	  font-family:'Microsoft JhengHei';
+   	  font-weight: 600;
+   }
+   #p_bs{
+   	  width: 100%;
+   	  height: 0.4rem;
+   	  line-height: 0.4rem;
+   	  text-align: center;
+   	  position: absolute;
+   	  left: 0;
+   	  /*bottom: 0;*/
+   }
+　　 *{
+    	 font-family:'Microsoft JhengHei';
+    }
+   .p_tops{
+   	 text-align: center;
+   	 color: orangered;
+   	 font-size: 0.5rem;
+   	 margin-top: 0.666666rem;
+   	 padding:0 0.2rem;
+   }
+
+  </style>
+</head>
+<body style="height: 100%;">
+	 
+	 <!--body设置高度为100%div设置高度为100%时高度就是视口的高度-->
+<div id='mengs'>
+	 	 <div id="ales">
+	 		 <img src="../img/gif/0147d85b320ba0a80120b959abcc40.gif"/>
+	 		    <div id="p_bs"><p>加载中...</p></div>
+	 	   </div>
+	 </div>
+	<!--
+		js:
+		
+		$('#mengs').fadeOut(300);
+	 
+	-->
+  <div id="app" @click="show1=false;show2=false" style="width: 100%;float: left;height: 100%;">
+  	
+  	 <div class="tab">
+  	 	 <p class="left_p">学生姓名</p>
+  	 	 <img class="right_img" src="../img/xiugai.png"/>
+  	 	 <input onkeydown="if(event.keyCode==32||event.keyCode==13){return false;}"  @input ="inputFunc" v-model="aws_name" type="text" class="vaules" placeholder="请输入学生姓名">
+  	 </div>
+  	 
+<!----------------------------学生年级--------------------------------------------->  	 
+  	 <div @click.stop @click="show1=true;show2=false;show3=false" class="tab">
+  	 	 <p class="left_p">学生年级</p>
+  	 	 <img class="right_imgs" src="../img/next@2x.png"/>
+  	 	 <p v-if="aws_value" style="float: right;width: 5.01rem;text-align: center">{{aws_value}}</p>
+  	 	 <p v-else class="p_box" style="width: 5.01rem;">请选择学生年级</p>
+  	 </div>
+  	   <van-popup v-model="show1" position="bottom" :overlay="false">
+              <van-picker
+                 show-toolbar
+                 title="选择学生年级"
+                :columns="columns1"
+                @cancel="onCancel1"
+                @confirm="onConfirm1"
+                @change="onChange1"
+                />                 
+       </van-popup>
+   
+<!----------------------------学生班级--------------------------------------------->  	  	 
+  	 <div @click.stop @click="show2=true;show1=false;show3=false" class="tab">
+  	 	 <p class="left_p">学生班级</p>
+  	 	 <img class="right_imgs" src="../img/next@2x.png"/>
+  	 	  <p v-if="aws_value2" style="float: right;width: 5.01rem;text-align: center;">{{aws_value2}}</p>
+  	 	  <p v-else class="p_box" style="width: 5.01rem;">请选择学生班级</p>
+  	 </div>
+  	  <van-popup v-model="show2" position="bottom" :overlay="false">
+              <van-picker
+                 show-toolbar
+                 title="选择学生班级"
+                :columns="columns2"
+                @cancel="onCancel2"
+                @confirm="onConfirm2"
+                @change="onChange2"
+                />                 
+       </van-popup>
+<!------------------------------------------------------------------------->  	
+  	 <!--<div class="tab">
+  	 	 <p class="left_p">当前课程</p>
+  	 	 <img class="right_img" src="../img/xiugai.png"/>
+  	 	 <input onkeydown="if(event.keyCode==32||event.keyCode==13){return false;}" style="width:5rem;" @input ="inputFunc" v-model="aws_f_name" type="text" class="vaules" placeholder="请输入课程名称">
+  	 </div>-->
+  	 
+  	 <div @click.stop @click="show3=true;show1=false;show2=false" class="tab">
+  	 	 <p class="left_p">当前课程</p>
+  	 	 <img class="right_imgs" src="../img/next@2x.png"/>
+  	 	  <p v-if="aws_f_name" class="p_box" style="color:black;">{{aws_f_name}}</p>
+  	 	  <p v-else class="p_box" style="width: 5.01rem;">请选择学生课程</p>
+  	 </div>
+  	  <van-popup v-model="show3" position="bottom" :overlay="false">
+              <van-picker
+                 show-toolbar
+                 title="选择学生课程"
+                :columns="columns3_s"
+                @cancel="onCancel3"
+                @confirm="onConfirm3"
+                @change="onChange3"
+                />                 
+       </van-popup>
+  	 
+  	 
+  	 
+  	 <p class="p_tops">*请确保添加的学生信息无误（平台将不提供修改和删除的功能）*</p>
+  	 
+  	 <div @click="go_click" v-if="btn_show" class="btn" style="background: #61BAFC;" >添加</div>
+  	 	<div v-else class="btn" style="background: #DEDEDE;font-weight:600;" >添加</div> 
+  	   
+  	   <van-popup v-model="show_xxs" style='background:rgba(0,0,0,0.02)'>
+  	  	<div style="">
+  	  		  <van-loading size='50'/>
+  	  	</div>
+  	  </van-popup>
+  	   
+  	   
+  </div>
+</body>
+ <script type="text/javascript" src="../js/jq.js"></script>
+ <script src="../js/axios.js"></script>
+ <script src="../js/vuex.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function(){
+        return {
+        	show_xxs:false,
+        	btn_show:false,
+        	aws_name:'',//学生姓名
+        	
+        	show1:false,
+        	columns1:['一年级', '二年级', '三年级', '四年级', '五年级','六年级','七年级','八年级','九年级'],//学生年级选项数据
+        	aws_value:'',//
+        	show2:false,
+        	show3:false,
+        	columns2:['1班', '2班', '3班', '4班', '5班','6班', '7班', '8班', '9班', '10班','11班', '12班', '13班', '14班', '15班','16班', '17班', '18班', '19班', '20班'],//学生年级选项数据
+        	aws_value2:'',
+        	columns3:[],//课程数据
+        	columns3_s:[],//展示的课程数据
+        	
+        	aws_f_name:'',//课程名称
+        	aws_f_id:'',//课程id
+        }
+      },
+      
+      methods:{
+      	
+      	get_awc(){//获取班级数据
+      	 	  axios.get(Main_domain_name+'/api/course/trust-course?api_token='+localStorage.api_token
+//          axios.get(Domain_name_for_testing+'/api/lesson/trust-classes?api_token=CMy7CyYFt4JpQJQbtaMmTzjtmFBMytWp'
+        	      ).then(res=>{
+        	      	console.log(res);
+        	      	if(res.status==200){
+        	      		if(res.data.code==200){
+        	      			
+        	      			console.log(res.data.data.ClassesList,'课程数据')
+        	      			
+        	      			this.columns3 = res.data.data.ClassesList;
+        	      			
+        	      			for(i in this.columns3){
+        	      				  this.columns3_s.push(this.columns3[i].school_name+'-('+this.columns3[i].title+')')
+        	      			}
+        	      			
+        	      			
+        	      	}else if(res.data.code==404){
+        	      		  vant.Toast('身份过期，需要重新验证！');
+        	      		  localStorage.teacher_id = '';
+        	      		  console.log(localStorage.api_token);
+        	      		  window.setTimeout(()=>{
+                       	    		  location.href='./001.html'
+                       },300)
+        	      	}
+        	      	}else{
+        	      	   vant.Toast('网络发生错误！'); 
+        	      	}
+                }).catch(err=>{
+                       console.log(err);
+                });
+      	 },
+      	
+      	
+      	 go_click(){
+      	 	 if(this.aws_name.length<=4){
+      	 	  this.show_xxs = true
+      	 	   axios.get(Main_domain_name+'/api/course/trust-student-save?api_token='+localStorage.api_token+'&surname='+this.aws_name+'&trust_course_id='+this.aws_f_id+'&classes='+this.aws_value2+'&grades='+this.aws_value
+        	      ).then(res=>{
+        	      	if(res.data.code==200){
+        	      		  console.log(res.data)
+                      this.show_xxs = false
+                      localStorage.add_show = 2
+      	 	            location.href = './Classroomss.html'   
+        	      	}else{
+        	      		vant.Toast('Something went wrong.(发生了错误 )');
+        	      	}
+                }).catch(err=>{
+                       console.log(err);
+              });
+      	 	 }else{
+      	 	 	   vant.Toast('学生名字数不能超过4个字');
+      	 	 }
+      	 	 
+      	 },
+      	 
+//课程、 、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
+      	 onConfirm3(value, index){
+            this.aws_f_name = value
+            this.show3 = false
+            this.inputFunc()
+            this.aws_f_id = this.columns3[index].id
+          },
+          onCancel3(){
+            this.show3 = false
+            this.inputFunc()
+          },
+          onChange3(picker, value, index){
+               this.aws_f_name = value
+               this.inputFunc()
+               this.aws_f_id = this.columns3[index].id
+          },  	 
+//年级、 、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
+      	  onConfirm1(value, index) {
+            this.aws_value = value
+            this.show1 = false
+            this.inputFunc()
+          },
+          onCancel1() {
+            this.show1 = false
+            this.inputFunc()
+          },
+          onChange1(picker, value, index) {
+               this.aws_value = value
+               this.inputFunc()
+          },
+//班级 、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
+          onConfirm2(value, index) {
+            this.aws_value2 = value
+            this.show2 = false
+            this.inputFunc()
+          },
+          onCancel2() {
+            this.show2 = false
+            this.inputFunc()
+          },
+          onChange2(picker, value, index) {
+               this.aws_value2 = value
+               this.inputFunc()
+          },
+ //、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、 。。。          
+          
+          inputFunc(){//判断提交按钮状态
+          	this.btn_show = (this.aws_name!=''&&this.aws_f_name!=''&this.aws_value!=''&&this.aws_value2!='')?true:false
+           },
+          
+           },
+      mounted(){
+      	 document.getElementById('app').style.height = document.documentElement.clientHeight+'px';
+      	 window.setTimeout(()=>{
+      	 	   $('#mengs').fadeOut(300);
+      	 },500)
+      	 this.get_awc()
+      	
+      }
+      
+    })
+  </script>
+</html>
