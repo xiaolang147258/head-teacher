@@ -556,9 +556,9 @@
    
     
     
-    <div class="kaoqins" v-for="i in 2">
+    <div class="kaoqins" v-for="i in 2" @click="ja1">
     	  <div class="kaoqins_top">篮球课A班（共50人）</div>
-    	  <div v-if="i==2" class="kaoqins_top2"><img src="../img/gerenkaoqin/meike.png"/><p style="margin-top:1.053333rem;float: left;">当天没有课程～</p></div>
+    	  <div v-if="i%2" class="kaoqins_top2"><img src="../img/gerenkaoqin/meike.png"/><p style="margin-top:1.053333rem;float: left;">当天没有课程～</p></div>
     	  <div v-else class="kaoqins_top2">
     	  	  <div class="kaoqins_top2_c"><p style="color:rgba(79,198,203,1);font-size:0.426666rem;">40</p><p>出勤</p></div>
     	  	  <div class="kaoqins_top2_c"><p style="color:rgba(237,178,44,1);font-size:0.426666rem;">40</p><p>迟到</p></div>
@@ -833,16 +833,18 @@
       		   	  this.searchBarFixed = false
       		   }
       	},
-      	ja1(index,i){
-      		localStorage.title=index==1?'出勤':(index==2?'迟到':(index==3?'请假':(index==4?'病/公':(index==5?"旷课":(index==6?'早退':'')))));
-      		localStorage.trust_classes_check_id = i.id
-      		localStorage.keywords = index
+      	
+      	ja1(){
+//    		localStorage.title=index==1?'出勤':(index==2?'迟到':(index==3?'请假':(index==4?'病/公':(index==5?"旷课":(index==6?'早退':'')))));
+//    		localStorage.trust_classes_check_id = i.id
+//    		localStorage.keywords = index
       		
-      		console.log(localStorage.keywords)
+//    		console.log(localStorage.keywords)
       		
       		this.destroyed()
       		location.href='002banwu_kaoqin2.html'
       	},
+      	
       	dal(){
       		this.top=2;
       	},

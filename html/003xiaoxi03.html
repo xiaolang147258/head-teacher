@@ -98,6 +98,27 @@
     *{
     	 font-family:'Microsoft JhengHei';
     }
+    .tab_box{
+    	 width:72%;
+    	 background:white;
+    	 font-size:0.4rem;
+    	 text-align:justify;
+    	 line-height:0.766666rem;
+    	 float: right;
+    	 margin-top: 0.3533333rem;
+    	 color:red;
+    }
+    .tab_s{
+  			 width: 100%;
+  			 /*height: 1.414285rem;*/
+  			 border-top: 0.014285rem solid #DEDEDE;
+  			 line-height: 1.414285rem;
+  			 padding-left: 0.428571rem;
+  			 padding-right: 0.428571rem;
+  			 background: white;
+  		   float: left;
+  		  border-bottom: 0.013333rem solid #DEDEDE;
+    }
   </style>
 </head>
 <body style="height: 100%;">
@@ -122,12 +143,14 @@
   	 	   <div class="tab"><p class="trs">学生姓名</p><p class="tds">{{name_chile}}</p></div>
   	 	   <div class="tab"><p class="trs">所在班级</p><p class="tds">{{class_s}}</p></div>
   	 	   <div class="tab"><p class="trs">家长姓名</p><p class="tds">{{name_faze}}</p></div>
-  	 	   <div class="tab"><p class="trs">家长电话</p><p class="tds">{{iphone}}</p></div>
+  	 	   <div class="tab"><p class="trs">家长电话</p><a :href="'tel:'+iphone" class="tds">{{iphone}}</a></div>
   	 	   <div class="tab"><p class="trs">申请时间</p><p class="tds">{{datess}}</p></div>
-  	 	   <div class="tab"><p class="trs">{{liyou}}：</p></div>
-  	 	   <div style="width: 100%;background:white;font-size:0.4rem;padding: 0 0.266666rem 0.466666rem 2.76666rem;text-align:justify;line-height:0.766666rem;border-bottom: 0.013333rem solid #DEDEDE;">
+  	 	   <div class="tab_s" style=""><p class="trs">{{liyou}}：</p>
+  	 	   	<div class="tab_box">
   	 	   	        {{reason}}
   	 	   </div>
+  	 	   </div>
+  	 	   
   	 </div>
   	 
   	 <div v-else id="values">

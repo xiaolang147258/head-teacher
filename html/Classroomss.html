@@ -49,10 +49,10 @@
   		width: 0.52rem;
   		height:0.426666rem;
   		margin-top: 0.2rem;
-  		margin-bottom: 0.106666rem;
+  		/*margin-bottom: 0.106666rem;*/
   	}
   	.btn_box p{
-  		font-size: 0.293333rem;
+  		font-size: 0.30333rem;
   		color: #BE1B1B;
   	}
   	
@@ -644,10 +644,10 @@
   	  	  <div class="img_box"><img src="../img/lixiaomeng@2x.png"/></div>
   	  	  <p class="name">{{j.surname}}</p>
 <!--班级学生状态---------------------------------------------------------------------------------------------------->  	  	  
-  	  	    <div style="background:rgba(250,183,90,1);" v-if='j.student_type==1' class="type_tie">午托</div>
-  	  	    <div style="background:rgba(253,127,71,1);" v-else-if="j.student_type==2" class="type_tie">营养餐</div>
-  	  	    <div style="background:rgba(255,110,166,1);" v-else-if="j.student_type==3" class="type_tie">晚托</div>
-  	  	    <div style="background:rgba(86,140,244,1);" v-else-if="j.student_type==4" class="type_tie">课程</div>
+  	  	    <div style="background:rgba(250,183,90,1);" v-if='j.type_isp==1' class="type_tie">午托</div>
+  	  	    <div style="background:rgba(253,127,71,1);" v-else-if="j.type_isp==2" class="type_tie">营养餐</div>
+  	  	    <div style="background:rgba(255,110,166,1);" v-else-if="j.type_isp==3" class="type_tie">晚托</div>
+  	  	    <div style="background:rgba(86,140,244,1);" v-else-if="j.type_isp==4" class="type_tie">课程</div>
   	  	    <!--<div style="background:#FC8B8B;" class="type_tie">已退</div>-->
 <!-------------------------------------------------------------------------------------------------------------->  	  	  
   	     </div>	 
@@ -765,8 +765,8 @@
    	</div>
   </transition>
    
-   	<div v-show="show2" id='dle2' @click='show2=false'>
-   		 <van-popup style='' v-model="show2" position="bottom" :overlay="false">
+   	<!--<div v-show="show2" id='dle2' @click='show2=false'>-->
+   		 <van-popup v-model="show2" position="bottom" :overlay="true">
              <van-picker
               show-toolbar
               title=""
@@ -775,7 +775,7 @@
               @confirm='onConfirm'
               />
        </van-popup>
-   	</div>
+   	<!--</div>-->
    
    </div>
    
@@ -787,7 +787,7 @@
   -->  
     <div class="btn_box" style="">
     	<div style="height:100%;width:7.173333rem;position:absolute;left: 0;right: 0;top: 0;bottom: 0;margin:auto;">
-    		<div style="margin-left:;"><img src="../img/ketang_hong@2x.png" alt="" /><p>课堂</p></div>
+    		<div style=""><img src="../img/ketang_hong@2x.png" alt="" /><p>课堂</p></div>
     	  <div @click="banwu" style="margin-left: 2.733333rem;"><img style="width: 0.413333rem;height: 0.453333rem;" src="../img/banwu_hui@2x.png" alt="" /><p style="color: #999999;">班务</p></div>	
     	  <div @click="xiao" style="float: right;"><img style="width: 0.52rem;height: 0.493333rem;" src="../img/xiaoxi_hui@2x.png" alt="" /><p style="color: #999999;">消息</p></div>	
     	 </div>
@@ -1289,7 +1289,7 @@
         	      			 that.top_show = false;
         	      			 document.getElementById('ale').style.height = document.documentElement.clientHeight+'px'
         	      			 
-      	               document.getElementById('dle2').style.height = document.documentElement.clientHeight+'px'
+//    	               document.getElementById('dle2').style.height = document.documentElement.clientHeight+'px'
       	               
 //    	               localStorage.api_token = that.api_token;//强行存储api——token =================》》
 
@@ -1394,7 +1394,7 @@
       
       mounted(){
       	
-//    	localStorage.api_token = 'j43WCYkGwBsrfhpnHmDJSFaBwKJ2MFiM'  
+      	localStorage.api_token = 'JXBWMQY7yHDz7RyTdwePFYhBFHHacax5'  
         
       	this.Get_classroom()//获取课堂数据
       	
