@@ -137,16 +137,19 @@
   		overflow: hidden;
    }
    .tab_ss_p{
-   	  float:right;width:5.04rem;height:1.146666rem;margin-top: -0.333333rem;
+   	  float:right;height:100%;
+   	  width:7.333333rem;
    	  font-size: 0.373333rem;
    	  color:rgba(153,153,153,1);
-   	  
+   	  overflow: hidden;
+      text-overflow:ellipsis;
+      white-space: nowrap;
    }
    .tab_ss_p p{
    	  /*width: 100%;*/
    	  margin: 0;
    	  float: right;
-   	  height: 0.766666rem;
+   	  height:100%;
    	  /*background: red;*/
    }
    .tab_box{
@@ -171,7 +174,8 @@
    	  font-size: 0.32rem;
    	  border-radius: 0.266666rem;
    	  text-align: center;
-   	  padding-top: 0.133333rem;
+   	  padding-top: 0.233333rem;
+   	  box-sizing: border-box;
    }
    .tab_box_box{
    	   width: 77%;
@@ -181,7 +185,7 @@
    .tab_box_c p{
    	   color:rgba(153,153,153,1);
    	   margin: 0;
-   	   margin-bottom:0.106666rem;
+   	   margin-bottom:0.206666rem;
    }
     *{
     	 font-family:'Microsoft JhengHei';
@@ -214,32 +218,28 @@
      <div class="tab" style="margin-bottom: 0.133333rem;"><p class="p1">家长电话</p><p v-show="jia_ss" class="p2s">*(点击手机号即可播打家长电话)</p> <a class="p2" :href="'tel:'+telephone" >{{telephone}}</a></div>
      
      <div class="tab_ss"><p class="p1">普惠午托</p>
-     	   <div class="tab_ss_p" style="">
-     	   	 <p>周一/二/三/四/五</p>
-     	   	 <p>11:30～14:00</p>
+     	   <div class="tab_ss_p">
+     	   	   <p>{{LateCare==null?'无':LateCare}}</p>
      	   </div>
      </div>
      <div class="tab_ss"><p class="p1">普惠晚托</p>
      	   <div class="tab_ss_p" style="">
-     	   	 <p>周一/二/三/四/五</p>
-     	   	 <p>11:30～14:00；17:15~18:00</p>
+     	   	   <p>{{NoonCare==null?'无':NoonCare}}</p>
      	   </div>
      </div>
      
-     <div class="tab" style="margin-top:0.133333rem;"><p class="p1">营养餐</p><p class="p2">13元套餐</p></div>
+     <div class="tab" style="margin-top:0.133333rem;"><p class="p1">营养餐</p><p class="p2">{{meal==null?'无':meal}}</p></div>
 
      <div class="tab_box" style="margin-top:0.133333rem;">
      	<p class="p1" style="margin-top:0.96rem;margin-right:0.5rem;">托管课程</p>
      	<div class="tab_box_box">
-     		<div v-for="i in 3" class="tab_box_c">
-     		    <p>足球课</p>
-     		    <p>周一</p>
-     		    <p>16:15～17:00</p>
-     		    <p>16:15～17:00</p>
+     		<div v-for="i in course" class="tab_box_c">
+     		    <p>{{i.title}}</p>
+     		    <p>{{i.start_date}}</p>
+     		    <p>{{i.end_date}}</p>
      		</div>   
      	</div>
      	   
-     
      </div>
      
      <div @click="kaoqin" class="tabss" style="margin-top:0.4rem;border-bottom:0.013333rem solid rgba(222,222,222,1);">查看考勤记录</div>
@@ -264,21 +264,27 @@
         	 School:'',//所在学校
         	 banji:'',//班级
         	 jia_ss:true,
+        	 course:[],
+        	 meal:'',
+        	 LateCare:'',
+        	 NoonCare:'',
         }
       },
       methods:{
       	get_act(){
       		 var that = this
-      	 	axios.get(Main_domain_name+'/api/course/trust-student-view?api_token='+localStorage.api_token+'&student_id='+localStorage.Student_id
+      	 	axios.get(Main_domain_name+'/api/class/teacher/getStudentInfo?api_token='+localStorage.api_token+'&student='+localStorage.student_ids+'&gc='+localStorage.Student_id
         	      ).then(function(res){
         	      	if(res.status==200){
-        	      		 console.log(res.data.data)
-        	      		 that.info = res.data.data.info;
-        	      		 that.UserName = res.data.data.info.UserName;
-        	      		 that.telephone = res.data.data.info.telephone;
-        	      		 that.surname = res.data.data.info.surname;
-        	      		 that.School = res.data.data.info.SchoolName;
-        	      		 that.banji =  res.data.data.info.grades+'('+res.data.data.info.classes+')'
+        	      		 console.log(res.data.data);
+        	      		 
+        	      		 that.course = res.data.data.course;
+        	      		 that.surname = res.data.data.student_name;
+        	      		 that.telephone = res.data.data.tel;
+        	      		 that.UserName = res.data.data.parent;
+        	      		 that.meal = res.data.data.meal;
+        	      		 that.LateCare = res.data.data.LateCare;
+        	      		 that.NoonCare = res.data.data.NoonCare;
         	      		 
         	      		 $('#mengs').fadeOut(300);
         	      		 

@@ -273,12 +273,9 @@ margin-top: 1.466666rem;
           var num = Math.random()*700 + 800;
           var sui = parseInt(num, 10);
           
-//        console.log(localStorage.api_token1)
-          
         	axios.get('/api/wechat/oauth?html_url='+location.href+'&sui='+sui+'&api_token='+localStorage.api_token1
         	    ).then(function(res){
         	    	if(res.status==200){
-        	    		
         	    		 console.log(res);
 	                          if(res.data.code=='301'){//需要授权登录
 	                          	 if(res.data.url){
@@ -299,9 +296,11 @@ margin-top: 1.466666rem;
 	                          	    console.log(localStorage.teacher_id)
 	                          	    localStorage.Classroom_ding_vuale = '';
 	                                localStorage.Classroom_id='';
+	                                
                        	    	    window.setTimeout(()=>{
                        	    		       location.href = './Classroomss.html'
                        	    	    },1000)
+                                  
 	                          }
         	    	}else{
         	    		vant.Toast('Something went wrong.(发生了错误 )');
@@ -309,41 +308,14 @@ margin-top: 1.466666rem;
                 }).catch(function(err){
                        console.log(err)
                 })
-        },
-
-//      huoqu2(){
-//      	var num = Math.random()*700 + 800;
-//        var sui = parseInt(num, 10);
-//      	 axios.get('/api/wechat/oauth?html_url='+location.href+'&sui='+sui+'&api_token='+localStorage.api_token1
-//      	    ).then(function(res){
-//      	    	console.log(res);
-//      	    	if(res.status==200){
-//      	    		
-//      	    		 $('#mengs').fadeOut(300);
-//      	    		
-//	                          if(res.data.code=='302'){
-//	                          	    localStorage.api_token = localStorage.api_token1;
-//	                          	    localStorage.teacher_id = res.data.data.teacher_id;
-//	                          	    vant.Toast('微信授权成功，请验证手机号码');
-//	                          }else if(res.data.code=='301'){
-//	                          	   if(res.data.url){
-//	                          	      location.href = res.data.url;
-//	                          	   } 
-//	                          }
-//      	    	   }else{
-//      	    		     vant.Toast('Something went wrong.(发生了错误 )');
-//      	    	   }
-//              }).catch(function(err){
-//                     console.log(err)
-//              })
-//      },
+          },
       },
       
       mounted(){
-      	if(localStorage.teacher_id!=''){
+      	if(localStorage.teacher_id){
       		   localStorage.Classroom_ding_vuale = '';
 	           localStorage.Classroom_id='';
-      	 	   location.href = './Classroomss.html'
+      	 	   location.href = './Classroomss.html';
       	 }else{
 //    	   if(localStorage.api_token1){
 //    	   	    this.huoqu2();

@@ -144,11 +144,11 @@
   	.pas{
   		font-size: 0.373333rem;
   		width: 100%;
-  		line-height: 0.733333rem;
-  		text-align：justify;
-  		font-family: 'PingFang SC';
+  		line-height:0.733333rem;
+  		font-family:'PingFang SC';
   		margin-bottom: 0.18rem;
   		padding-left:1.214285rem;
+  		text-align:justify;
   	}
   	.box_img{
   		width: 2.5rem;
@@ -840,7 +840,11 @@
         	      	 	    	    duration:5000
         	      	 	    	 });
                       }
-                      this.get_actives()
+                     localStorage.teacher_id = '';
+        	      		  console.log(localStorage.api_token);
+        	      		  window.setTimeout(()=>{
+                       	    		  location.href = './001.html'
+                       },300)
               });
       	  
       	},

@@ -414,8 +414,7 @@
     }
     .aders_s{
     	 width: 100%;
-    	 height:3.3133rem;
-    	
+    	 height:4.03133rem;
     	 background: white;
     	 box-shadow:0px 5px 10px rgba(0,0,0,0.16);
     }
@@ -449,6 +448,7 @@
     	  font-size: 0.32rem;
     	  color: white;
     	  border-radius: 0.066666rem;
+    	  margin-right: 0.1rem;
     }
     #adid{
     	 width: 82%;
@@ -562,7 +562,6 @@
 	<!---->
 	
   <div id="app" @click="ader_show=false" style="width: 100%;float: left;padding-top: 1.173rem;">
-  	  
   	 <!--
        	作者：2443611475@qq.com
        	时间：2018-10-10
@@ -603,15 +602,7 @@
   	  		  	    </div>
   	  		  </div>
   	  	</div>
-<!---->  	  	
-  	  	<!--<div class="xian_y"></div>--> 
-  	  	<!--<div @click="add_aws" id="xia_doms">
-  	  		  <p>添加学生</p>
-  	  		  <img src="../img/add.png" alt="" />
-  	  	</div> -->
        </div>
-
-
      <ul id="uls" v-show="Student_list.length>3">
      	   <div style="width: 0.3714rem;height:100%;margin: 0 auto;position:relative;">
      	   	  <div v-show="Student_list.length!=0" style="" class="p_bs" ></div>
@@ -623,10 +614,7 @@
   	   </ul>
 
    	 <div style="width: 100%;padding-bottom: 1.266666rem;float: left;">
-   	 	<!--<div  v-for="(i,index) in Student_list" class="xue" @click="tiao(i)">
-   	   	   <img src="../img/lixiaomeng@2x.png"/>
-   	   	   <p>{{i.surname}}</p>
-   	   </div>-->
+   	 	
 <!--筛选没有学生-->   	   
    	   <div v-if="kong_act_x" id="kong_act" @click="all_act" style=""><a href="#">没有查询到学生哦，点击展示所有学生！</a></div>
    	   
@@ -644,27 +632,15 @@
   	  	  <div class="img_box"><img src="../img/lixiaomeng@2x.png"/></div>
   	  	  <p class="name">{{j.surname}}</p>
 <!--班级学生状态---------------------------------------------------------------------------------------------------->  	  	  
-  	  	    <div style="background:rgba(250,183,90,1);" v-if='j.type_isp==1' class="type_tie">午托</div>
-  	  	    <div style="background:rgba(253,127,71,1);" v-else-if="j.type_isp==2" class="type_tie">营养餐</div>
-  	  	    <div style="background:rgba(255,110,166,1);" v-else-if="j.type_isp==3" class="type_tie">晚托</div>
-  	  	    <div style="background:rgba(86,140,244,1);" v-else-if="j.type_isp==4" class="type_tie">课程</div>
-  	  	    <!--<div style="background:#FC8B8B;" class="type_tie">已退</div>-->
+  	  	    <div style="background:rgba(250,183,90,1);" v-show='j.Quality1==1' class="type_tie">午托</div>
+  	  	    <div style="background:rgba(253,127,71,1);padding:0 0.2rem;" v-show="j.cate==1" class="type_tie">营养餐</div>
+  	  	    <div style="background:rgba(255,110,166,1);" v-show="j.Quality2==1" class="type_tie">晚托</div>
+  	  	    <div style="background:rgba(86,140,244,1);" v-show="j.course==1" class="type_tie">课程</div>
 <!-------------------------------------------------------------------------------------------------------------->  	  	  
   	     </div>	 
-  	   <!--</van-cell-group>-->
-  	    
-         <!--<div class="del_tab" slot="right">
-        	  <div @click="bj_click(j)" id="bianji">编辑</div>
-        	  <div @click="colse(j)" id="dells">删除</div>
-         </div>-->
-   <!--</van-swipe-cell>--> 
-  	   
   	   </div>
-  	    
   	  </div> 	
-   	 
      </div>   
-   	   
    	 </div>
 <!--修改名字组件-------------------------------------------------------------------------------------------------->   	 
    	 <mu-fade-transition>
@@ -683,89 +659,10 @@
        </div>
     </mu-fade-transition>  
 <!---------------------------------------------------------------------------------------------------->   	 
-   	 
-   	 
-<!-------------------------------------------------------------------------------------------------------------->    	   
-   	   
    	 <van-popup v-model="showx" position="bottom" :overlay="false">
          <div  v-show="showx" @click="showx=false" style="width: 100%;background:white;" >
-                        	  
          </div>
      </van-popup>  
-<!-------------------------------------------------------------------------------------------------------------->     	   
-<!-------------------------------------------------------------------------------------------------------------->  
-<!-------------------------------------------------------------------------------------------------------------->  
-   	 <!--<img class="kao" @click="show=true" src="../img/kaoqin@2x.png"/>-->
-   	 <transition name = "fade">
-   	   <div style="padding-top: 5.733333rem;margin: 0;" @click="show_xa=false;date_p_show=false;showx=false" v-show="show_xa" v-bind:style = "styleobjs" @touchmove.prevent  class='ales' @click.stop>
-   	 	 
-   	 	 <div @click.stop>
-   	 	   <van-popup v-model="showx" position="top" :overlay="false">
-              <div  v-show="showx" @click.stop="" style="width: 100%;background:white;height: 6.333333rem;text-align: center;padding-top: 1.533333rem;box-sizing: border-box;" >
-                      <p style="font-size:0.4rem;font-weight: 600;">请选择需要补勤的时间</p>
-                      <div @click="date_p_show=true" style="width: 4rem;height:0.866666rem;margin: auto;background: #F5F5F5;margin-top: 0.666666rem;border-radius: 0.133333rem;">
-                      <!--<div @click="show_date=true" style="width: 4rem;height:0.866666rem;margin: auto;background: #F5F5F5;margin-top: 0.666666rem;border-radius: 0.133333rem;">-->	
-                      	  <p style="font-size: 0.4rem;line-height:0.866666rem;text-align:center;">{{date_s}}  ▼</p>
-                      </div>
-               <div id="btna" @click="mua_click" style="">确认</div>
-              </div>
-         </van-popup> 
-   	 	    <van-popup style='' v-model="date_p_show" position="bottom" :overlay="false">
-             <van-datetime-picker
-               v-model="currentDate"
-               type="date"
-               @confirm='date_wa'
-               @cancel="date_p_show=false"
-               
-             />
-          </van-popup>
-   	 	   </div>  
-
-   	 	    <div v-show="showx==false">
-   	 	      <!--<div @click.stop="showx=true" style="background: #BE1B1B;" class="btnss">补考勤</div>-->
-   	 	       <div @click.stop="show_date=true" style="background: #BE1B1B;" class="btnss">补考勤</div>
-   	 	      <div @click.stop="date_clicks" style="background: #61BAFC;" class="btnss">今日考勤</div>	  
-   	      </div>
-   	      
-   	   </div>
-   	 </transition>
-<!-------------------------------------------------------------------------------------------------------------->     	 	    
-<!-------------------------------------------------------------------------------------------------------------->   
-<!-------------------------------------------------------------------------------------------------------------->     	 
-   	 
-   	 <!--<img class="kao" @click="show_xa=true" src="../img/kaoqin@2x.png"/>-->
-   	 
-   	 
-  <transition name = "fade"> 	
-   	<div v-show="show" @click="show=false;show1=false;show3=false" v-bind:style = "styleobj" @touchmove.prevent id="ale">
-   		
-   		<!--弹出时间选项（默认先弹出时间选项后-点击按钮-弹出考勤类型选项）-->
-   		 <van-popup v-show="show3" style='height:3.942857rem;border-radius:0.533333rem 0.533333rem 0 0;text-align: center;' v-model="show" position="bottom" :overlay="false">
-              <p style="font-size: 0.48rem;font-weight:600;line-height: 1.36rem;">请选择您要考勤的时间</p>
-              <!--当前没有课程显示-->
-              <div v-if="cwa_date_x" class="date_tab" style="background:#DEDEDE;margin: 0.657142rem  auto;">当天没有课程</div>
-              <!--当前有课程显示-->
-              <div v-else class="date_tab_box">
-              	 <div id="date_tab_box_c">
-              	    <div v-show="cwa_date1.type_isp!=2&&cwa_date1.specific_time" @click.stop="date_click(cwa_date1)" class="date_tab" style="margin: 0.657142rem 0 0 0.702857rem;">{{cwa_date1.specific_time}}</div>
-              	    <div v-show="cwa_date2.type_isp!=2&&cwa_date2.specific_time" @click.stop="date_click(cwa_date2)" class="date_tab" style="float: right;margin-right: 0.65rem;">{{cwa_date2.specific_time}}</div>
-                 </div>  
-                 
-                 <div v-show="cwa_date1.type_isp==2&&cwa_date2.type_isp==2" class="date_tab" style="background:#DEDEDE;margin: 0.657142rem  auto;">当天考勤已完成</div> 
-                  <div v-show="dian_xiao" class="date_tab" style="background:#DEDEDE;margin: 0.657142rem  auto;">当天考勤已完成</div> 
-              </div>
-               
-       </van-popup>
-      <!--弹出考勤类型选项-->
-       <van-popup v-show="show1" style='height:5.733333rem;border-radius:0.533333rem 0.533333rem 0 0;text-align: center;' v-model="show1" position="bottom" :overlay="false">
-              <p style="font-size: 0.48rem;font-weight:600;line-height: 1.36rem;margin-bottom:0.857142rem;">请选择您要考勤的类型</p>
-              <div v-if="cwa_ke_show" @click="shangke" class="imgbox"><img src="../img/shangke@3x.png"/><p>上课考勤</p></div>
-              <div v-else @click="xiake" class="imgbox"><img src="../img/xiakekaoqin@3x.png"/><p>下课考勤</p></div>
-       </van-popup>
-   	</div>
-  </transition>
-   
-   	<!--<div v-show="show2" id='dle2' @click='show2=false'>-->
    		 <van-popup v-model="show2" position="bottom" :overlay="true">
              <van-picker
               show-toolbar
@@ -775,11 +672,7 @@
               @confirm='onConfirm'
               />
        </van-popup>
-   	<!--</div>-->
-   
    </div>
-   
-   
   <!--
   	作者：2443611475@qq.com
   	时间：2018-10-10
@@ -792,34 +685,6 @@
     	  <div @click="xiao" style="float: right;"><img style="width: 0.52rem;height: 0.493333rem;" src="../img/xiaoxi_hui@2x.png" alt="" /><p style="color: #999999;">消息</p></div>	
     	 </div>
     </div>
-     
-<!---日期选择器------------------------------------------------------------------------------------------>
-   
-<mu-fade-transition>
- <div @click="show_date=false" id="meng" v-show='show_date' style="width:100%;position:fixed;top:0;left:0;background: rgba(0,0,0,0.1);z-index:200;"> 
-   <mu-slide-top-transition>
-     <div @click.stop v-show='show_date' id="adid">
-     	
-    <mu-paper :z-depth="1" class="demo-date-picker">
-        <mu-date-picker :date.sync="datess" :max-date='currentDate'  @change='nuse_dates'></mu-date-picker>
-    </mu-paper>
-       
-       <mu-button @click='muse_ok' class='usebtn' style='margin-right:1.3rem;' color="primary">确认</mu-button>
-       <mu-button @click='show_date=false' style='float:left;margin-left:1.3rem;' class='usebtn' color="error">取消</mu-button>
-       
-     </div>
-   </mu-slide-top-transition>    
- </div>
-</mu-fade-transition>
-   
-<!---日期选择器------------------------------------------------------------------------------------------>   
- 
-  <!--<van-popup v-model="show_xxs" style='background:rgba(0,0,0,0.02)'>
-  	  	<div style="">
-  	  		  <van-loading size='50'/>
-  	  	</div>
-  	  </van-popup>-->
-  
   </div>
 </body>
  
@@ -828,8 +693,9 @@
   <script src="../js/axios.js"></script>
   <script src="../js/vuex.js"></script>
   <!--手机端打印错误--> 
-   <!--<script src="//cdn.bootcss.com/eruda/1.4.2/eruda.min.js"></script>
-   <script>eruda.init();</script>-->
+  
+   <script src="//cdn.bootcss.com/eruda/1.4.2/eruda.min.js"></script>
+   <script>eruda.init();</script>
   
   
   <script>
@@ -925,35 +791,7 @@
         }
       },
       methods:{
-      		beforeClose(){//修改名字保存按钮被点击
-      			 
-      			 axios.get(Main_domain_name+'/api/class-service/trust-classes-student-edit?api_token='+localStorage.api_token+'&trust_classes_id='+localStorage.Classroom_id+'&student_id='+this.bj_act.student_id+'&surname='+this.username
-        	      ).then(res=>{
-        	      	 console.log(res)
-        	      	if(res.status==200){
-                     if(res.data.code==200){
-                     	   
-                     	   this.show_aws = false;
-                     	    this.$toast({
-        	      	 	    	    message:'修改成功',
-        	      	 	    	    duration:900
-        	      	 	    	 });
-                     	   this.get_claact(localStorage.Classroom_id)
-                     	   this.username = '';
-                     	   this.btn_show = false
-                     	   
-                     }else if(res.data.code==404){
-                     	  
-                     }
-        	      	}else{
-        	      		vant.Toast('Something went wrong.(发生了错误 )');
-        	      	}
-                }).catch(err=>{
-                   console.log(err);
-                   this.beforeClose()
-              });
-      			 
-      	},
+      		
       	
       	inputFunc(){
       		  this.btn_show = (this.username!=''&&this.username.length<=4)?true:false
@@ -967,72 +805,106 @@
       		  console.log(this.bj_act)
       	},
       	
-      	
-      colse(i){//用户侧滑出删除按钮，并且点击
-    	 console.log(i);
-    	 vant.Dialog.confirm({
-            message: '确定删除'+i.surname+'吗？'
-          }).then(() => {//确认
-             axios.get(Main_domain_name+'/api/class-service/trust-classes-student-del?api_token='+localStorage.api_token+'&trust_classes_id='+localStorage.Classroom_id+'&student_id='+i.student_id
-        	      ).then(res=>{
-        	      	 console.log(res)
-        	      	if(res.status==200){
-                     if(res.data.code==200){
-                     	   this.$toast({
-        	      	 	    	    message:'删除成功',
-        	      	 	    	    duration:900
-        	      	 	    	 });
-                     	   
-                     	   this.get_claact(localStorage.Classroom_id)
-                     	   
-                     }else if(res.data.code==500){
-                     	  this.$toast({
-        	      	 	    	    message:res.data.msg,
-        	      	 	    	    duration:1500
-        	      	 	    	 });
-                     }
-        	      	}else{
-        	      		vant.Toast('Something went wrong.(发生了错误 )');
-        	      	}
-                }).catch(err=>{
-                   console.log(err);
-                   this.colse()
-              }); 
-          }).catch(()=>{//取消
-          	 
-          });
-    },
-
       	muse_ok(){//用户点击确认按钮
-      		  this.gitdate()
-      		  
-      		  this.mua_click()
-      		  
+//    		  this.gitdate()
+//    		  
+//    		  this.mua_click()
       	},
       	
-      	nuse_dates(date){//用户点击一次选择考勤时间
-      		 let a = date
-      		 this.yer = a.getFullYear(); this.maths = a.getMonth()+1;this.dates = a.getDate()
-      	},
+      	
       	
       	add_aws(){
       		 location.href = './C_Add student.html'  
             
       	},
       	
-      	ader_c_click(i,index){
+      	
+      	
+      	ader_c_click(i,index){//分类筛选
       		  this.ader_title = i;
       		  this.ader_index = index
       		  this.ader_show = false
       		  this.show_xxs = true
-      		  this.get_claact(localStorage.Classroom_id);
-      		  
+      		  this.get_claact(localStorage.Classroom_ding_vuale);
+      		  console.log(i);
+      		  window.setTimeout(()=>{
+      		  var ac = [];
+      		  if(index==0){//查询全部
+      		  	 this.Student_list = Student_list_s;
+      		  	 console.log(Student_list_s,'全部')
+      		  	 this.kong_act_x = false;
+      		  }else if(index==1){//午托
+      		    var acr = Student_list_s;
+      		  	for(var l=0;l<5;l++){
+      		  		for(var i=0;i<acr.length;i++){
+      		  	 	    for(var j=0;j<acr[i].StudentList.length;j++){
+      		  	 	    	  if(acr[i].StudentList[j].Quality1!=1){
+      		  	 	    	  	    acr[i].StudentList.splice(j,1);
+      		  	 	    	  }
+      		  	 	    }
+      		  	 	    if(acr[i].StudentList.length==0){
+      		  	 	    	   acr.splice(i,1);
+      		  	 	    }
+      		  	 	   this.kong_act_x = acr.length==0?true:false;
+      		  	 	   this.Student_list = acr;
+      		  	  }
+      		  	}
+      		  }else if(index==2){
+      		  	var acr = Student_list_s;
+      		  	for(var l=0;l<5;l++){
+      		  		for(var i=0;i<acr.length;i++){
+      		  	 	    for(var j=0;j<acr[i].StudentList.length;j++){
+      		  	 	    	  if(acr[i].StudentList[j].cate!=1){
+      		  	 	    	  	    acr[i].StudentList.splice(j,1);
+      		  	 	    	  }
+      		  	 	    }
+      		  	 	    if(acr[i].StudentList.length==0){
+      		  	 	    	   acr.splice(i,1);
+      		  	 	    }
+      		  	 	   this.kong_act_x = acr.length==0?true:false;
+      		  	 	   this.Student_list = acr;
+      		  	   }
+      		  	 }  
+      		  }else if(index==3){
+      		  	var acr = Student_list_s;
+      		  	for(var l=0;l<5;l++){
+      		  		for(var i=0;i<acr.length;i++){
+      		  	 	    for(var j=0;j<acr[i].StudentList.length;j++){
+      		  	 	    	  if(acr[i].StudentList[j].Quality2!=1){
+      		  	 	    	  	    acr[i].StudentList.splice(j,1);
+      		  	 	    	  }
+      		  	 	    }
+      		  	 	    if(acr[i].StudentList.length==0){
+      		  	 	    	   acr.splice(i,1);
+      		  	 	    }
+      		  	 	   this.kong_act_x = acr.length==0?true:false;
+      		  	 	   this.Student_list = acr;
+      		  	   }
+      		  	 }  
+      		  }else if(index==4){
+      		  	var acr = Student_list_s;
+      		  	for(var l=0;l<5;l++){
+      		  		for(var i=0;i<acr.length;i++){
+      		  	 	    for(var j=0;j<acr[i].StudentList.length;j++){
+      		  	 	    	  if(acr[i].StudentList[j].course!=1){
+      		  	 	    	  	    acr[i].StudentList.splice(j,1);
+      		  	 	    	  }
+      		  	 	    }
+      		  	 	    if(acr[i].StudentList.length==0){
+      		  	 	    	   acr.splice(i,1);
+      		  	 	    }
+      		  	 	   this.kong_act_x = acr.length==0?true:false;
+      		  	 	   this.Student_list = acr;
+      		  	   }
+      		  	 }  
+      		  }
+      		 },500)  
       	},
       	all_act(){
       		this.inpv = '';
       		this.inp_show = true;
       		this.show_xxs = true
-      		this.get_claact(localStorage.Classroom_id);
+      		this.get_claact(localStorage.Classroom_ding_vuale);
       	},
       	handleScroll(){//监测滑动，使右侧li同步到指定字母位置
             var a = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
@@ -1086,7 +958,7 @@
       	changeCount_s(){//输入框失去焦点事件==》执行搜索功能
       		   this.inpv==''?this.inps=true:this.inps=false;
       		   this.show_xxs = true
-      		   this.get_claact(localStorage.Classroom_id);
+      		   this.get_claact(localStorage.Classroom_ding_vuale);
       	},
       	changeCount(){//输入框输入内容事件
       	 	   this.inpv==''?this.inps=true:this.inps=false;
@@ -1097,141 +969,6 @@
       	 	   document.getElementById('inp').focus();
       	 	   console.log(222)
       	 },
-      	
-      	date_clicks(){//点击今日考勤，执行选择课时
-      		this.git_date();
-      		this.get_time(localStorage.Classroom_id);
-      		this.show_xa=false;this.show=true;this.show3=true;
-      	},
-      	
-      	mua_click(){//确认补考勤时间后，执行选择课时
-      		var iyer = new Date().getFullYear();
-      		var imath = new Date().getMonth()+1;
-      		var idate = new Date().getDate();
-      		
-          if(imath<10){
-      		 	  	 if((imath+'').length<2){
-      		 	  	 	if(typeof(imath) == 'string'){
-	                 	   imath.replace(new RegExp('0'), "")
-	                 }
-      		 	  		  imath = '0'+imath
-      		 	  	 }
-      		    }
-      		   if(idate<10){
-      		   	  if((idate+'').length<2){
-	              if(typeof(idate) == 'string'){
-	                 	   idate.replace(new RegExp('0'), "")
-	                 }
-      		   	 	idate = '0'+idate
-      		   	 	}
-      		   }
-      	 
-      	 var as = iyer+'-'+imath+'-'+idate
-      
-    var oDate1 = new Date(this.date_sa);
-    var oDate2 = new Date(as);
-//  var oDate2 = new Date('2018-12-5');
-    console.log(this.date_sa,'0000000');
-    console.log(as,'0000000')
-        
-//     if(oDate2.getTime() > oDate1.getTime()){
-	     if(as != this.date_sa){
-         this.show_xa=false;this.date_p_show=false;this.showx=false;
-      	 this.get_time(localStorage.Classroom_id);
-      	 this.show=true;this.show3=true;
-      	 this.show_date = false;
-       }else{
-           this.$toast({
-        	      	 	    	    message:'补勤时间，必须小于今日的时间！',
-        	      	 	    	    duration:900
-        	      	 	    	 });
-       } 
-      },
-      	
-      	gitdate(){//同步时间
-      		 this.date_s = this.yer+'年'+this.maths+'月'+this.dates+'日';
-      		 
-      		 	  if(this.maths<10){
-      		 	  	 if((this.maths+'').length<2){
-      		 	  	 	if(typeof(this.maths) == 'string'){
-	                 	   this.maths.replace(new RegExp('0'), "")
-	                 }
-      		 	  		  this.maths = '0'+this.maths
-      		 	  	 }
-	                 
-      		    }
-      		   if(this.dates<10){
-      		   	  if((this.dates+'').length<2){
-	              if(typeof(this.dates) == 'string'){
-	                 	   this.dates.replace(new RegExp('0'), "")
-	                 }
-      		   	 	this.dates = '0'+this.dates
-      		   	 	}
-                  
-      		   }
-      		 
-      		 this.date_sa = this.yer+'-'+this.maths+'-'+this.dates;
-      	},
-      	
-      	git_date(){//获取当前时间
-      		  console.log(11111111)
-      		  var a = new Date();
-      		  this.yer = a.getFullYear(); this.maths = a.getMonth()+1;this.dates = a.getDate()
-      		  this.gitdate()
-      	},
-      	
-      	date_wa(value){//筛选时间
-      		  this.yer = value.getFullYear(); this.maths = value.getMonth()+1;this.dates = value.getDate()
-      		  this.gitdate()
-      		  this.date_p_show = false;
-//    		  this.show_xa=true;this.showx=true;
-      	},
-      	
-      	date_click(i){//关闭时间选项--出现考勤类型选项
-      		  
-      		  console.log(i)
-      		  
-      		  this.cwa_date_data = i;
-      		  
-      		  this.cwa_ke_show = (i.type_isp==0)?true:false
-      		  
-      		  this.show1 = true;
-      		  this.show3 = false;
-      	},
-      	
-      	get_time(id){//获取当前班级考勤时间||考勤类型函数
-//    		  var that = this
-//          let a = new Date()
-//          let dat = a.getFullYear()+'-'+(a.getMonth()+1)+'-'+a.getDate()
-//          let dat = '2018-11-22';
-            console.log(this.date_sa);
-      	   	axios.get(Main_domain_name+'/api/course/course-check-choose?api_token='+localStorage.api_token+'&now_day='+this.date_sa+'&trust_course_id='+id
-        	      ).then(res=>{
-        	      	if(res.status==200){
-        	      		    console.log(res.data);
-                     if(res.data.code==200){
-                     	  this.cwa_date_x = false;
-                        this.cwa_date1 = res.data.data.info[0]?res.data.data.info[0]:'';
-                        this.cwa_date2 = res.data.data.info[1]?res.data.data.info[1]:'';
-                        if(res.data.data.info.length==1){
-                        	  if(res.data.data.info[0].type_isp==2){
-                        	  	   this.dian_xiao = true
-                        	  	   console.log('成立')
-                        	  }else{
-                        	  	   this.dian_xiao = false
-                        	  }
-                        }
-                     }else if(res.data.code==404){
-                     	  this.cwa_date_x = true  
-                     }
-        	      	}else{
-        	      		vant.Toast('Something went wrong.(发生了错误 )');
-        	      	}
-                }).catch(err=>{
-                       console.log(err);
-              });
-      	},
-      	
       	
       	get_claact(id){//请求班级学生列表数据函数
       		var that = this
@@ -1249,57 +986,49 @@
       			   ader_id =4
       		}
       		
-      	 	axios.get(Main_domain_name+'/api/course/trust-course-student?api_token='+localStorage.api_token+'&trust_course_id='+id+'&keywords='+this.inpv+'&student_type='+ader_id
+      	 	axios.get(Main_domain_name+'/api/class/teacher/getClassinfo?api_token='+localStorage.api_token+'&gc='+id+'&student='+this.inpv+'&student_type='+ader_id
         	     ).then(res=>{
         	      	if(res.data.code==200){
-        	      		  console.log(res.data.data.ClassesList,'学生列表数据')
-        	      		if(res.data.data.ClassesList.length!=0){
-        	      			  
-        	      			  that.Student_list = res.data.data.ClassesList;
-                        
-                        that.get_time(id);
-                     
-                        localStorage.trust_classes_id = id//班级id
-                     
-                        this.kong_act_x = false
-                        
+        	      		  console.log(res.data.data,'学生列表数据')
+        	      		if(res.data.data.length!=0){
+        	      			  that.Student_list = res.data.data;
+        	      			  Student_list_s = res.data.data;
+                        localStorage.trust_classes_id = id;//班级id
+                        this.kong_act_x = false;
         	      		}else{
         	      			  this.kong_act_x = true 
         	      		}
-                     
 //                   this.showbox = false;
                      $('#mengs').fadeOut(300);
                      this.show_xxs = false
-        	      	}else{
-        	      		vant.Toast('Something went wrong.(发生了错误 )');
+        	      	}else if(res.data.code==404){
+        	      		 console.log(res);
+        	      		this.kong_act_x = true 
         	      	}
                 }).catch(err=>{
                        console.log(err);
               });
       	 },
       	Get_classroom(){
-      		var that = this
-      	 	axios.get(Main_domain_name+'/api/course/trust-course?api_token='+localStorage.api_token
+      		var that = this;
+      		if(localStorage.api_token){
+      			axios.get(Main_domain_name+'/api/class/teacher/getclasslist?api_token='+localStorage.api_token
         	      ).then(res=>{
-        	      	console.log(res,'数据');
+//      	      	console.log(res,'数据');
         	      	
         	      		if(res.data.code==200){
         	      			 
-        	      			if(res.data.data.ClassesList.length>0){
+        	      			if(res.data.data.length>0){
+        	      				
         	      			 that.top_show = false;
-        	      			 document.getElementById('ale').style.height = document.documentElement.clientHeight+'px'
         	      			 
-//    	               document.getElementById('dle2').style.height = document.documentElement.clientHeight+'px'
-      	               
-//    	               localStorage.api_token = that.api_token;//强行存储api——token =================》》
-
-        	      			 that.columns =  res.data.data.ClassesList;
+        	      			 that.columns =  res.data.data;
         	      			 
-//      	      			 console.log(that.columns,'banji')
+        	      			 console.log(that.columns,'班级数据')
         	      			 
-                     for(i in that.columns){
-                   	   that.columns_s.push(that.columns[i].school_name+'-('+that.columns[i].title+')');	
-                     }
+                      for(i in that.columns){
+                   	    that.columns_s.push(that.columns[i].classes);	
+                      }
                      
                      var cla_id = 0;
                      if(localStorage.Classroom_id){
@@ -1318,9 +1047,9 @@
                      
                      that.ding_vuale =localStorage.Classroom_ding_vuale
                      
-                     let ass =  localStorage.Classroom_id
+                     let ass =  localStorage.Classroom_id;
                      
-                     that.get_claact(ass);//默认一打开页面获取第一个班的学生列表
+                     that.get_claact(localStorage.Classroom_ding_vuale);//默认一打开页面获取第一个班的学生列表
                      
 //                   console.log(that.columns)
                      
@@ -1349,14 +1078,24 @@
         	      	 	    	    message:'发生错误，请检查网络连接',
         	      	 	    	    duration:5000
         	      	 	    	});
-//      	      	 	   this.Get_classroom()
+//      	      	 	  localStorage.teacher_id = '';
+//      	      		  window.setTimeout(()=>{
+//                     	    		  location.href = './001.html'
+//                     },300)	
                 });
+      		}else{
+//    			  localStorage.api_token1='';
+//    			  localStorage.teacher_id = '';
+//    			   window.setTimeout(()=>{
+//                location.href = './001.html'
+//             },300)	
+      		  }
       	  },
       	xiao(){
       		location.href ='./003xiaoxi.html'
       	},
       	 tiao(i){
-      	 	 localStorage.Student_id = i.class_student_id;
+      	 	 localStorage.Student_id = i.class_name;
       	 	 localStorage.student_ids = i.student_id;
       	 	 console.log(i)
       	 	 location.href ='./xue_sheng_zi_liao.html';//跳转学生资料
@@ -1384,27 +1123,51 @@
              this.ding_vuale = value;
              localStorage.Classroom_ding_vuale = value;//存储用户选择的班级
              localStorage.Classroom_id = this.columns[index].id;//存储用户选择的班级的id
-             this.show_xxs = true
-             this.get_claact(this.columns[index].id);
+             this.show_xxs = true;
+             
+             this.get_claact(this.columns[index].classes);
+             
+             this.show2 = false
          },
          onCancel(){
             this.show2=false;
-         }
+         },
+         
+         git_shenfen(){//获取身份
+        	  axios.get(Main_domain_name+'/api/class/user/teacher_role?api_token='+localStorage.api_token
+        	    ).then(function(res){
+        	    	if(res.status==200){
+	                          if(res.data.code=='200'){
+	                          	  console.log(res.data,'获取身份');
+	                          }
+        	    	 }
+                }).catch(function(err){
+                       console.log(err)
+                })
+        },
+         
       },
       
       mounted(){
       	
-      	localStorage.api_token = 'JXBWMQY7yHDz7RyTdwePFYhBFHHacax5'  
+      	localStorage.api_token = 'x3Kwp6N7f2NtMCwYd7Kc464eDHzPrc7c'  
+      	
+      	this.git_shenfen()//获取身份
+      	
+//    	localStorage.api_token = 'JXBWMQY7yHDz7RyTdwePFYhBFHHacax5'  
+        
+//      localStorage.api_token = 'AKdkwm7arwfPThPWQTShRadeYBkEk7fj'  
         
       	this.Get_classroom()//获取课堂数据
       	
       	console.log(localStorage.api_token)
       	
-      	document.getElementById('meng').style.height = document.documentElement.clientHeight+'px';
+//    	document.getElementById('meng').style.height = document.documentElement.clientHeight+'px';
       	
-      	this.git_date()//获取当前时间
+//    	this.git_date()//获取当前时间
       	
       	window.addEventListener('scroll', this.handleScroll);
+      	
       	
       }
         

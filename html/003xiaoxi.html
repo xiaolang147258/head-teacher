@@ -279,6 +279,11 @@
         	      	}
                 }).catch(err=>{
                       console.log(err);
+                      localStorage.teacher_id = '';
+        	      		  console.log(localStorage.api_token);
+        	      		  window.setTimeout(()=>{
+                       	    		  location.href = './001.html'
+                       },300)
                 });  
        },
        

@@ -184,11 +184,12 @@
     #rong_c{
     	 width: 100%;
     	 /*height: 14.15rem;*/
+    	 height: 100%;
     	 background: #F5F5F5;
     	 text-align: center;
     	 padding-top: 1.914285rem;
     	 position: fixed;
-    	 top:5.666666rem;
+    	 top:4.666666rem;
     	 left: 0;
     }
     #rong_c img{
@@ -277,17 +278,7 @@
 		$('#mengs').fadeOut(100);
 	 
 	-->
-  	
-  	
-  	<!--<div @click="show_x= false" id="meng2" v-show="show_x">
-    	 <van-popup v-model="show_x" position="top" :overlay="false">
-           <div style="width: 100%;background:white;padding-top:1.67rem;">
-           	   <div v-for='(i,index) in cwa_active' @click='clicktab_s(i,index)' class="xuans" :class='{dala:das==index}'>{{i}}</div>
-           </div>
-       </van-popup>
-    </div>-->
-  	
-  	
+  
   	<!--顶部下拉选择器-->
   	<div @click="xiao" id="meng" v-show="show3" style="">
     	 <van-popup v-model="show3" position="top" :overlay="false">
@@ -316,62 +307,30 @@
   	 </div>
   	 
      <div class="topsa" id="a1" style="z-index: 500;">
-     	 <!--<div @click="show_x=!show_x;show3=false;show4=false" id="leftb">
-     	 	 <p class="pa" style="width:2.066666rem;text-align: center;">{{cwa_title}}</p><img style="margin:0.226666rem 0 0 0;float: right;" src="../img/shouqi@2x.png"/>
-     	 </div>-->
-     	 
      	 <div id="top_tabs">
      		 <p @click="Page_turning(0)" class="pc">上个月</p>
      	   <div  @click='top_la' id="zongd">{{mydatea}}&nbsp;</div>
          <p  @click="Page_turning(1)" class="pc" style="float:right;margin:0;margin-right:0.653333rem;">下个月</p>
          <img @click='top_la' id="san" style="margin:0.413333rem 0.9rem 0 0;" src="../img/shouqi@2x.png"/>
      	</div>
-     	 
      </div>
      
-     <!--<div id="top2">{{year}}/{{month}}/01-{{year}}/{{month}}/{{date_getas}}</div>-->
-     
      <!--没有考勤记录时-->
-     <div id="rong_c" v-if="false">
+     <div id="rong_c" v-if="show_false">
    	   	    <div style=" width:3.3rem;height: 2.857142rem;margin:0 auto"> <img src="../img/banwu_img/meiyoukecheng.png"/> </div>
    	   	   	<p style="font-size: 0.4rem;color:#999999;margin-top: 0.585714rem;">暂时没有考勤记录～</p>
    	   </div>
    	   
      <!--有考勤记录时-->
-     <div v-else v-for='(i,index) in 6' class="lie">
-     	 <p class="lei_p">2019-10-12</p>
-     	 
-     	 <span v-show="i==1"><p style="color:rgba(79,198,203,1);" class="lei_p2">出勤</p><img src="../img/zhengchangchuqin@3x.png" alt="" /></span>
-     	 <span v-show="i==2"><p style="color:#A4CC59;" class="lei_p2">早退</p><img src="../img/zaotui@2x.png" alt="" /></span> 
-     	 <span v-show="i==3"><p style="color:rgba(79, 203, 141, 1);" class="lei_p2">缺勤</p><img src="../img/gerenkaoqin/que.png" alt="" /></span>
-     	 <span v-show="i==4"><p style="color:rgba(252, 97, 97, 1);" class="lei_p2">公病</p><img src="../img/gerenkaoqin/zhengchangchuqin.png" alt="" /></span>
-     	 <span v-show="i==5"><p style="color:#E67BC9;" class="lei_p2">旷课</p><img src="../img/kuangke@3x.png" alt="" /></span>
-     	 <span v-show="i==6"><p style="color:#EDB22C;" class="lei_p2">迟到</p><img src="../img/chidao@3x.png" alt="" /></span>
-     	 
-       <!--<p class="psf">{{i.now_day}} <a v-show="giv_date_s==i.now_day">（今日）</a></p>	
-       <div v-for="(j,inde) in i.CheckArr">
-       <div v-if="j.type_id==6" class="lies">
-       	   <img src="../img/zaotui@2x.png"/> <a style="color: #A4CC59;">早退</a> <p>{{j.specific_time}}&nbsp;{{j.title}}</p>
-       </div>	  
-       <div v-else-if="j.type_id==3" class="lies">
-       	   <img src="../img/qingjia.png"/> <a style="color: #FC6161;">请假</a> <p>{{j.specific_time}}&nbsp;{{j.title}}</p>
-       </div>		  
-       <div v-else-if="j.type_id==4" class="lies">
-       	   <img src="../img/zhengcahngxiake@3x.png"/> <a style="color: #6786ED;">病假/公假</a><p>{{j.specific_time}}&nbsp;{{j.title}}</p>
-       </div>	
-       <div v-else-if="j.type_id==1" class="lies">
-       	   <img src="../img/zhengchangchuqin@3x.png"/> <a style="color: #4FC6CB;">正常出勤</a> <p>{{j.specific_time}}&nbsp;{{j.title}}</p>
-       </div>	
-       <div v-else-if="j.type_id==5" class="lies">
-       	   <img src="../img/kuangke@3x.png"/> <a style="color: #E67BC9;">旷课</a> <p>{{j.specific_time}}&nbsp;{{j.title}}</p>
-       </div>	
-       <div v-else-if="j.type_id==2" class="lies">
-       	   <img src="../img/chidao@3x.png"/> <a style="color: #EDB22C;">迟到</a> <p>{{j.specific_time}}&nbsp;{{j.title}}</p>
-       </div>	
-       </div>-->
-       
+     <div v-else v-for='(i,index) in date_active' class="lie">
+     	 <p class="lei_p">{{i.now_day}}</p>
+     	 <span v-show="i.type_id==1"><p style="color:rgba(79,198,203,1);" class="lei_p2">出勤</p><img src="../img/zhengchangchuqin@3x.png" alt="" /></span>
+     	 <span v-show="i.type_id==2"><p style="color:#A4CC59;" class="lei_p2">早退</p><img src="../img/zaotui@2x.png" alt="" /></span> 
+     	 <span v-show="i.type_id==3"><p style="color:rgba(79, 203, 141, 1);" class="lei_p2">缺勤</p><img src="../img/gerenkaoqin/que.png" alt="" /></span>
+     	 <span v-show="i.type_id==4"><p style="color:rgba(252, 97, 97, 1);" class="lei_p2">公病</p><img src="../img/gerenkaoqin/zhengchangchuqin.png" alt="" /></span>
+     	 <span v-show="i.type_id==5"><p style="color:#E67BC9;" class="lei_p2">旷课</p><img src="../img/kuangke@3x.png" alt="" /></span>
+     	 <span v-show="i.type_id==6"><p style="color:#EDB22C;" class="lei_p2">迟到</p><img src="../img/chidao@3x.png" alt="" /></span>
      </div>	
-     
      
   </div>
 </body>
@@ -379,9 +338,8 @@
  <!--移动适配-->
    <script type="text/javascript" src="../js/jq.js"></script>
    <script src="../js/axios.js"></script>
-   
    <script src="../js/vuex.js"></script>
-  <!-- import JavaScript -->
+  
   <script>
   	
     new Vue({
@@ -434,23 +392,17 @@
       },
       methods:{
       	get_actives(){
-      		let stra_data = this.get_date+'-'+'01'
-      		if(this.date_getas<10){this.date_getas = '0'+this.date_getas}
-      		let end_date = this.year.toString()+'-'+this.month+'-'+this.date_getas;
+      		  let stra_data = this.get_date+'-'+'01';
+      		  if(this.date_getas<10){this.date_getas = '0'+this.date_getas};
+      		  let end_date = this.year.toString()+'-'+this.month+'-'+this.date_getas;
       		  
-//    		  console.log(stra_data);
-//    		  console.log(end_date);
-//    		  console.log(this.das);
-      		  axios.get(Main_domain_name+'/api/lesson/student-check-view?api_token='+localStorage.api_token+'&student_id='+localStorage.student_ids+'&stra_date='+stra_data+'&end_date='+end_date+'&type_id='+this.das
+      		  axios.get(Main_domain_name+'/api/class/teacher/studentCheck?api_token='+localStorage.api_token+'&student='+localStorage.student_ids+'&time_s='+stra_data+'&time_e='+end_date
         	      ).then((res)=>{
         	      	if(res.status==200){
-        	      		 this.date_active = res.data.data.CheckList.reverse();
-        	      		 for(i in this.date_active){
-        	      		 	   this.date_active[i].CheckArr = this.date_active[i].CheckArr.reverse();
-        	      		 }
-        	      		 console.log(this.date_active);
+        	      		 this.date_active = res.data.data.reverse();
+        	      		 console.log(this.date_active,'数据');
+        	      		 this.show_false = this.date_active.length==0?true:false;
         	      		 
-        	      		 if(this.date_active.length==0){this.show_false = true}else{this.show_false = false}
         	      		 $('#mengs').fadeOut(100);
         	      	}else{
         	      		vant.Toast('Something went wrong.(发生了错误 )');
@@ -540,7 +492,7 @@
           	 this.da = index;
           	 if(i=='全部'){
           	 	   this.mydate();
-          	 	   this.mydatea='全部' ;
+          	 	   this.mydatea='全部';
           	 	   this.get_actives()
 //        	 	   this.qian='上个月';this.hou='下个月';
           	 }else if(i=='本月'){
@@ -564,7 +516,7 @@
       	  riqi(){
            	 this.show4 = false;
            },
-      	  formatter(type,value) {
+      	  formatter(type,value){
                 if (type === 'year'){
                   return `${value}年`;
                 } else if (type === 'month'){
@@ -591,7 +543,7 @@
       	 this.get_actives();
       	 
       	 window.setTimeout(()=>{
-      	       document.getElementById('rong_c').style.height = document.documentElement.clientHeight+'px'
+//    	       document.getElementById('rong_c').style.height = document.documentElement.clientHeight+'px'
       	 },100)
       	
       	 
