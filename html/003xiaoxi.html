@@ -13,7 +13,7 @@
   
  <script src="../node_modules/_vant@1.3.5@vant/lib/vant.js"></script>
  <link rel="stylesheet" href="../node_modules/_vant@1.3.5@vant/lib/vant-css/index.css">
- 	<!--<link rel="stylesheet" href="https://unpkg.com/vant/lib/vant-css/index.css">
+  <!--<link rel="stylesheet" href="https://unpkg.com/vant/lib/vant-css/index.css">
   <script src="https://unpkg.com/vant/lib/vant.min.js"></script>-->
   
   <style type="text/css">
@@ -151,8 +151,6 @@
 	 
 	-->
 	
-	
-	
   <div id="app" style="width: 100%;float: left;">
   	<van-pull-refresh v-model="isLoading" @refresh="onRefresh">
   	<div id="app2">
@@ -186,9 +184,9 @@
   	 	   	   </div>
   	 	   	   
   	 	   	   <div @click="xitong('请假记录')"  class="xiang" style="border: none;">
-  	 	   	   	   <div class="q" style="background: #61BAFC;border-radius:50%;position: relative;"><img style="width: 0.614285rem;height: 0.557142rem;position: absolute;top: 0.318571rem;left: 0.27rem;" src="../img/banwu_img/xiaoxitongzhi.png"/></div>
+  	 	   	   	   <div class="q" style="background:#61BAFC;border-radius:50%;position:relative;"><img style="width: 0.614285rem;height: 0.557142rem;position: absolute;top: 0.318571rem;left: 0.27rem;" src="../img/banwu_img/xiaoxitongzhi.png"/></div>
   	 	   	   	   <p class="p">请假记录</p>
-  	 	   	   	   <img class="i" src="../img/next@2x.png" alt="" />
+  	 	   	   	   <img class="i" src="../img/next@2x.png"/>
   	 	   	   	   <p class="shu" v-show="qingjia!=0">{{qingjia>100?'99+':qingjia}}</p>
   	 	   	   </div>
   	 	   	   
@@ -247,7 +245,11 @@
       		location.href = './003dian_zan.html'
       	},
       	 ke_tang(){
-      	 	location.href = './Classroomss.html'
+      	 	if(localStorage.type_con==1){
+      	 					 location.href = './Classroomss.html'
+      	 	}else if(localStorage.type_con==2){
+      	 					 location.href = './classroom.html'  
+      	 	}
       	 },
       	 banwu(){
       	 	location.href = './002banwu_kaoqin.html'
@@ -261,10 +263,9 @@
     },
        
        get_act(){
-       	 axios.get(Main_domain_name+'/api/course/tips-count?api_token='+localStorage.api_token
+       	 axios.get(Main_domain_name+'/api/class/teacher/course/tips-count?api_token='+localStorage.api_token
         	      ).then(res=>{
         	      	 if(res.data.code==200){
-        	      	 	   
         	      	 	   $('#mengs').fadeOut(100);
         	      	 	   console.log(res.data);
         	      	 	   this.tuikuan = res.data.data.RefundsCount;
@@ -275,7 +276,7 @@
         	      		  console.log(localStorage.api_token);
         	      		  window.setTimeout(()=>{
                        	    		  location.href = './001.html'
-                       },300)
+                          },300)
         	      	}
                 }).catch(err=>{
                       console.log(err);
@@ -286,8 +287,6 @@
                        },300)
                 });  
        },
-       
-       
        
       },
       mounted(){

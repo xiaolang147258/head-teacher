@@ -399,9 +399,9 @@
     	 margin-top:0.263333rem;
     }
     .aders{
-    	 width: 100%;
-    	 height: 0;
-    	 position: absolute;
+    	 width:100%;
+    	 height:0;
+    	 position:absolute;
     	 top: 1rem;
     	 left: 0;
     	 transition: 0.5s;
@@ -541,6 +541,20 @@
 		 font-size: 0.48rem;
 		 color: #6E4C45;
 	}
+	.dal_a{
+		 width:1.333333rem;
+		 height: 1.333333rem;
+		 position: fixed;
+		 right: 0.333333rem;
+		 bottom: 2.626666rem;
+		 background:#61BAFC;
+		 box-shadow:0px 4px 8px rgba(97,186,252,0.42);
+		 border-radius: 50%;
+		 font-size: 0.366666rem;
+		 color: white;
+		 line-height: 1.333333rem;
+		 text-align:center;
+	}
   </style>
 </head>
 <body style="height:100%;">
@@ -621,7 +635,7 @@
 <!--筛选有学生-->
       <div v-else v-for='(h,c) in Student_list'>
       	
-   	   <div id="xiang"  >
+   	   <div id="xiang">
   	   <div  class="toubiao">{{h.initials}}</div>
   	   
   	   <div v-for='(j,a) in h.StudentList'>
@@ -678,13 +692,16 @@
   	时间：2018-10-10
   	描述：底部标签
   -->  
-    <div class="btn_box" style="">
+    <div class="btn_box">
     	<div style="height:100%;width:7.173333rem;position:absolute;left: 0;right: 0;top: 0;bottom: 0;margin:auto;">
     		<div style=""><img src="../img/ketang_hong@2x.png" alt="" /><p>课堂</p></div>
     	  <div @click="banwu" style="margin-left: 2.733333rem;"><img style="width: 0.413333rem;height: 0.453333rem;" src="../img/banwu_hui@2x.png" alt="" /><p style="color: #999999;">班务</p></div>	
     	  <div @click="xiao" style="float: right;"><img style="width: 0.52rem;height: 0.493333rem;" src="../img/xiaoxi_hui@2x.png" alt="" /><p style="color: #999999;">消息</p></div>	
     	 </div>
     </div>
+	
+	<!-- <div class="dal_a" v-show="ke_showa" @click="go_classomm">课堂</div> -->
+	
   </div>
 </body>
  
@@ -694,16 +711,19 @@
   <script src="../js/vuex.js"></script>
   <!--手机端打印错误--> 
   
-   <script src="//cdn.bootcss.com/eruda/1.4.2/eruda.min.js"></script>
+   <!-- <script src="//cdn.bootcss.com/eruda/1.4.2/eruda.min.js"></script>
    <script>eruda.init();</script>
-  
-  
+  -->
   <script>
     
     //控制微信浏览器回退按钮，跳转至指定页面
   	pushHistory();
         window.addEventListener("popstate",function(e){
-            location.href='./Classroomss.html'
+			if(localStorage.type_con==1){
+							 location.href = './Classroomss.html'
+			}else if(localStorage.type_con==2){
+							 location.href = './classroom.html'  
+			}
         });
         function pushHistory(){
         var state = { 
@@ -721,11 +741,9 @@
         	btn_show:false,
         	show_aws:false,
         	
-        	
         	show_xxs:false,
         	show_date:false,
         	datess:undefined,	
-        	
         	
         	ader_title:'全部',
         	ader_index:0,
@@ -788,15 +806,16 @@
         	dian_xiao:false,
         	
         	bj_act:'',//修改学生姓名的当前学生存储
+			
+			ke_showa:true,
         }
       },
       methods:{
-      		
-      	
+		
+		  
       	inputFunc(){
       		  this.btn_show = (this.username!=''&&this.username.length<=4)?true:false
       	},
-      	
       	bj_click(j){//用户侧滑出编辑按钮，并且点击
       		  this.show_aws=true;
       		  this.btn_show = true;
@@ -804,28 +823,17 @@
       		  this.username = j.surname
       		  console.log(this.bj_act)
       	},
-      	
       	muse_ok(){//用户点击确认按钮
-//    		  this.gitdate()
-//    		  
-//    		  this.mua_click()
       	},
-      	
-      	
-      	
       	add_aws(){
       		 location.href = './C_Add student.html'  
-            
       	},
-      	
-      	
-      	
       	ader_c_click(i,index){//分类筛选
       		  this.ader_title = i;
       		  this.ader_index = index
       		  this.ader_show = false
       		  this.show_xxs = true
-      		  this.get_claact(localStorage.Classroom_ding_vuale);
+      		  this.get_claact(localStorage.Classroom_id);
       		  console.log(i);
       		  window.setTimeout(()=>{
       		  var ac = [];
@@ -904,7 +912,7 @@
       		this.inpv = '';
       		this.inp_show = true;
       		this.show_xxs = true
-      		this.get_claact(localStorage.Classroom_ding_vuale);
+      		this.get_claact(localStorage.Classroom_id);
       	},
       	handleScroll(){//监测滑动，使右侧li同步到指定字母位置
             var a = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
@@ -958,7 +966,7 @@
       	changeCount_s(){//输入框失去焦点事件==》执行搜索功能
       		   this.inpv==''?this.inps=true:this.inps=false;
       		   this.show_xxs = true
-      		   this.get_claact(localStorage.Classroom_ding_vuale);
+      		   this.get_claact(localStorage.Classroom_id);
       	},
       	changeCount(){//输入框输入内容事件
       	 	   this.inpv==''?this.inps=true:this.inps=false;
@@ -1014,8 +1022,6 @@
       		if(localStorage.api_token){
       			axios.get(Main_domain_name+'/api/class/teacher/getclasslist?api_token='+localStorage.api_token
         	      ).then(res=>{
-//      	      	console.log(res,'数据');
-        	      	
         	      		if(res.data.code==200){
         	      			 
         	      			if(res.data.data.length>0){
@@ -1031,17 +1037,18 @@
                       }
                      
                      var cla_id = 0;
-                     if(localStorage.Classroom_id){
-                     	   for(var i=0;i<that.columns.length;i++){
-                     	   	     if(that.columns[i].id==localStorage.Classroom_id){
-                     	   	     	    cla_id=2;
-                     	   	     }
-                     	   }
-                     }
+					 
+//                      if(localStorage.Classroom_id){
+//                      	   for(var i=0;i<that.columns.length;i++){
+//                      	   	     if(that.columns[i].id==localStorage.Classroom_id){
+//                      	   	     	    cla_id=2;
+//                      	   	     }
+//                      	   }
+//                      }
 
-                     localStorage.Classroom_ding_vuale = localStorage.Classroom_ding_vuale&&cla_id==2?localStorage.Classroom_ding_vuale:that.columns_s[0];//存储用户选择的班级
+                     localStorage.Classroom_ding_vuale = localStorage.Classroom_ding_vuale?localStorage.Classroom_ding_vuale:that.columns_s[0];//存储用户选择的班级
                      
-                     localStorage.Classroom_id = localStorage.Classroom_id&&cla_id==2?localStorage.Classroom_id:that.columns[0].id ;//存储用户选择的班级的id
+                     localStorage.Classroom_id = localStorage.Classroom_id?localStorage.Classroom_id:that.columns[0].id ;//存储用户选择的班级的id
                      
                      console.log(cla_id,'--缓的id是否有效(0无效 2有效)--',localStorage.Classroom_id,'-- 缓存的班级 id');
                      
@@ -1049,7 +1056,7 @@
                      
                      let ass =  localStorage.Classroom_id;
                      
-                     that.get_claact(localStorage.Classroom_ding_vuale);//默认一打开页面获取第一个班的学生列表
+                     that.get_claact(localStorage.Classroom_id);//默认一打开页面获取第一个班的学生列表
                      
 //                   console.log(that.columns)
                      
@@ -1065,11 +1072,10 @@
         	      		}
         	      	}else if(res.data.code==404){
         	      		  vant.Toast('身份过期，需要重新验证！');
+						  localStorage.api_token1 = '';
         	      		  localStorage.teacher_id = '';
         	      		  console.log(localStorage.api_token);
-        	      		  window.setTimeout(()=>{
-                       	    		  location.href = './001.html'
-                       },300)
+                       	  location.href = './001.html'
         	      	  }
         	      	
                 }).catch(err=>{
@@ -1084,11 +1090,11 @@
 //                     },300)	
                 });
       		}else{
-//    			  localStorage.api_token1='';
-//    			  localStorage.teacher_id = '';
-//    			   window.setTimeout(()=>{
-//                location.href = './001.html'
-//             },300)	
+   			  localStorage.api_token1='';
+   			  localStorage.teacher_id = '';
+   			   window.setTimeout(()=>{
+                  location.href = './001.html'
+               },300)
       		  }
       	  },
       	xiao(){
@@ -1102,19 +1108,9 @@
       	 },
       	 shangke(){
       	 	 
-      	 	 console.log(this.cwa_date_data);
-      	 	 
-      	 	 localStorage.schooltime_id = this.cwa_date_data.schooltime_id;
-      	 	 
-      	 	 localStorage.now_day = this.date_sa;
-      	 	 
-      	 	 location.href='./shang_ke_kao_qin.html'//跳转上课考勤
-      	 	 
       	 },
       	 xiake(){
-      	 	 localStorage.schooltime_id = this.cwa_date_data.schooltime_id;
-      	 	 localStorage.now_day = this.date_sa;
-      	 	 location.href='./xia_ke_kao_qin.html'//跳转下课考勤
+      	 	
       	 },
       	 banwu(){
       	 	 location.href ='./002banwu_kaoqin.html'
@@ -1124,39 +1120,35 @@
              localStorage.Classroom_ding_vuale = value;//存储用户选择的班级
              localStorage.Classroom_id = this.columns[index].id;//存储用户选择的班级的id
              this.show_xxs = true;
-             
-             this.get_claact(this.columns[index].classes);
-             
+             this.get_claact(localStorage.Classroom_id);
              this.show2 = false
          },
          onCancel(){
             this.show2=false;
          },
          
-         git_shenfen(){//获取身份
-        	  axios.get(Main_domain_name+'/api/class/user/teacher_role?api_token='+localStorage.api_token
-        	    ).then(function(res){
-        	    	if(res.status==200){
-	                          if(res.data.code=='200'){
-	                          	  console.log(res.data,'获取身份');
-	                          }
-        	    	 }
-                }).catch(function(err){
-                       console.log(err)
-                })
-        },
-         
+		 git_shenfen(){//获取身份
+		  	  axios.get(Main_domain_name+'/api/class/user/teacher_role?api_token='+localStorage.api_token
+		  	    ).then(res=>{
+		  	    	if(res.status==200){
+		                        if(res.data.code=='200'){
+		                        	  console.log(res.data.data,'获取身份');
+		 							  localStorage.type_con = res.data.data;//储存身份
+		                        }
+		  	    	 }
+		          }).catch(err=>{
+		                 console.log(err)
+		          })
+		  },
       },
       
       mounted(){
-      	
-      	localStorage.api_token = 'x3Kwp6N7f2NtMCwYd7Kc464eDHzPrc7c'  
-      	
-      	this.git_shenfen()//获取身份
+      	// localStorage.type_con=1;
+      	// localStorage.api_token = 'MMsQnNpQcEdDrYdtXS3XEF2SnpxzkRD2'  
       	
 //    	localStorage.api_token = 'JXBWMQY7yHDz7RyTdwePFYhBFHHacax5'  
         
-//      localStorage.api_token = 'AKdkwm7arwfPThPWQTShRadeYBkEk7fj'  
+     // localStorage.api_token = 'AKdkwm7arwfPThPWQTShRadeYBkEk7fj'  
         
       	this.Get_classroom()//获取课堂数据
       	

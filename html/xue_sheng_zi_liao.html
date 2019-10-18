@@ -58,7 +58,7 @@
   		opacity:1;
   	}
   	.p2{
-  		font-size: 0.373333rem;
+  		font-size: 0.353333rem;
   		float: right;
   		color: #999999;
   	}
@@ -102,7 +102,6 @@
    	  text-align: center;
    	  position: absolute;
    	  left: 0;
-   	  /*bottom: 0;*/
    }
    .p2s{
    	  font-size: 0.303333rem;
@@ -139,11 +138,11 @@
    .tab_ss_p{
    	  float:right;height:100%;
    	  width:7.333333rem;
-   	  font-size: 0.373333rem;
+   	  font-size: 0.353333rem;
    	  color:rgba(153,153,153,1);
    	  overflow: hidden;
-      text-overflow:ellipsis;
-      white-space: nowrap;
+      /* text-overflow:ellipsis;
+      white-space: nowrap; */
    }
    .tab_ss_p p{
    	  /*width: 100%;*/
@@ -156,16 +155,14 @@
    	  width: 100%;
   		height: auto;
   		border-top: 0.006666rem solid rgba(222,222,222,1);
-  		
   		padding-left: 0.4rem;
-  		/*padding-right: 0.4rem;*/
   		box-sizing: border-box;
   		background: white;
   		float: left;
   		padding-bottom: 0.16rem;
    }
    .tab_box_c{
-   	  width: 2.24rem;
+   	  /* width: 2.24rem; */
    	  height: 2.24rem;
    	  float: left;
    	  margin-right: 0.2rem;
@@ -174,8 +171,10 @@
    	  font-size: 0.32rem;
    	  border-radius: 0.266666rem;
    	  text-align: center;
-   	  padding-top: 0.233333rem;
    	  box-sizing: border-box;
+	  padding:0 0.213333rem;
+	  padding-top: 0.233333rem;
+	  
    }
    .tab_box_box{
    	   width: 77%;
@@ -188,7 +187,7 @@
    	   margin-bottom:0.206666rem;
    }
     *{
-    	 font-family:'Microsoft JhengHei';
+       font-family:'Microsoft JhengHei';
     }
   </style>
 </head>
@@ -223,7 +222,7 @@
      	   </div>
      </div>
      <div class="tab_ss"><p class="p1">普惠晚托</p>
-     	   <div class="tab_ss_p" style="">
+     	   <div class="tab_ss_p">
      	   	   <p>{{NoonCare==null?'无':NoonCare}}</p>
      	   </div>
      </div>
@@ -231,15 +230,16 @@
      <div class="tab" style="margin-top:0.133333rem;"><p class="p1">营养餐</p><p class="p2">{{meal==null?'无':meal}}</p></div>
 
      <div class="tab_box" style="margin-top:0.133333rem;">
-     	<p class="p1" style="margin-top:0.96rem;margin-right:0.5rem;">托管课程</p>
-     	<div class="tab_box_box">
+     	<p class="p1" style="margin-top:0.96rem;">托管课程</p>
+     	<div v-if="course.length!=0" class="tab_box_box">
      		<div v-for="i in course" class="tab_box_c">
      		    <p>{{i.title}}</p>
      		    <p>{{i.start_date}}</p>
      		    <p>{{i.end_date}}</p>
-     		</div>   
+     		</div>
+			
      	</div>
-     	   
+		<div v-else  class="tab_ss_p" style="width:0.4rem;margin:1rem 0.4rem 0 0;"><p>无</p></div>
      </div>
      
      <div @click="kaoqin" class="tabss" style="margin-top:0.4rem;border-bottom:0.013333rem solid rgba(222,222,222,1);">查看考勤记录</div>
@@ -250,6 +250,13 @@
   <script src="../js/jq.js"></script>
   <script src="../js/axios.js"></script>
   <!-- import JavaScript -->
+  
+  <!--手机端打印错误--> 
+   <!-- <script src="//cdn.bootcss.com/eruda/1.4.2/eruda.min.js"></script>
+   <script>eruda.init();</script> -->
+  
+  
+  
   <script>
   	let app = document.getElementById('app');
 	  app.style.height = document.documentElement.clientHeight+'px'
@@ -306,8 +313,6 @@
       	  window.setTimeout(()=>{
       	  	  this.jia_ss = false
       	  },5000);
-      	  
-      	  
       	  
       },
       

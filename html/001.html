@@ -176,7 +176,8 @@ margin-top: 1.466666rem;
   <script type="text/javascript" src="../js/jq.js"></script>
   	
   <script src="../js/axios.js"></script>
-  
+ <!-- <script src="//cdn.bootcss.com/eruda/1.4.2/eruda.min.js"></script>
+  <script>eruda.init();</script> -->
   <script>
     new Vue({
       el: '#app',
@@ -219,51 +220,51 @@ margin-top: 1.466666rem;
         	      	}else{
         	      		vant.Toast('发生了错误 ');
         	      	}
-
                 }).catch(err=>{
                        console.log(err);
                 });
-           
       	  }
         },
 
         tiao(){
         	console.log(this.value14+'---'+this.yanzheng)
-        	if(this.value14==this.yanzheng){
-        		axios.get('/api/wechat/doLogin?phone='+this.value13+'&vcode='+this.yanzheng+'&openid='+localStorage.openid+'&vcode2='+this.value14+'&api_token='+localStorage.api_token
-        	     ).then((res)=>{
-                       console.log(res);
-                       if(res.status==200){
-                       	 if(res.data.code==500){
-                       	 	   vant.Toast('您的信息没有录入到本系统');
-                       	 }else if(res.data.code==200){
-                       	 	  localStorage.teacher_id = res.data.data.teacher_id;
-                       	    if(localStorage.openid&&localStorage.teacher_id&&localStorage.api_token){
-                       	    	vant.Toast('验证成功');
-                       	    	localStorage.Classroom_ding_vuale = '';
-	                            localStorage.Classroom_id='';
-                       	    	window.setTimeout(()=>{
-                       	    		  location.href = './Classroomss.html'
-                       	    	},1000)
-                       	    }
-                       	 }
-                       
-                       }else{
-                       	  vant.Toast('Something went wrong.(发生了错误 )');
-                       }
-                }).catch((err)=>{
-                       console.log(err);
-                 });
-        	}else{
-        		//验证码有误
-        		vant.Toast('验证码有误');
-        	}
+			if(this.value14.length<=6){
+				if(this.value14==this.yanzheng){
+					axios.get('/api/wechat/doLogin?phone='+this.value13+'&vcode='+this.yanzheng+'&openid='+localStorage.openid+'&vcode2='+this.value14+'&api_token='+localStorage.api_token
+				     ).then(res=>{
+				           console.log(res);
+				           if(res.status==200){
+				           	 if(res.data.code==500){
+				           	 	   vant.Toast('您的信息没有录入到本系统');
+				           	 }else if(res.data.code==200){
+				           	 	  localStorage.teacher_id = res.data.data.teacher_id;
+				           	    if(localStorage.openid&&localStorage.teacher_id&&localStorage.api_token){
+				           	    	vant.Toast('验证成功');
+				           	    	localStorage.Classroom_ding_vuale = '';
+				                    localStorage.Classroom_id='';
+									this.git_shenfen()//判断身份确定跳转至那个平台
+				           	    }
+				           	 }
+				           }else{
+				           	  vant.Toast('Something went wrong.(发生了错误 )');
+				           }
+				    }).catch(err=>{
+				           console.log(err);
+				     });
+				}else{
+					//验证码有误
+					vant.Toast('验证码有误');
+				}
+			}else{
+				vant.Toast('验证码长度不得超过6位数');
+			}
+        	
         },
         huoqu(){
          var len =  32;
-　            　      var $chars='ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';/****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+　            　 var $chars='ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';/****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
 　　             var maxPos = $chars.length;
-　　                 var pwd = '';
+　　             var pwd = '';
 　            for(i = 0; i < len; i++){
 　　　　                 pwd += $chars.charAt(Math.floor(Math.random()*maxPos));
 　　                  }
@@ -274,14 +275,13 @@ margin-top: 1.466666rem;
           var sui = parseInt(num, 10);
           
         	axios.get('/api/wechat/oauth?html_url='+location.href+'&sui='+sui+'&api_token='+localStorage.api_token1
-        	    ).then(function(res){
+        	    ).then(res=>{
         	    	if(res.status==200){
         	    		 console.log(res);
 	                          if(res.data.code=='301'){//需要授权登录
-	                          	 if(res.data.url){
-	                          	    location.href = res.data.url;
-	                          	    $('#mengs').fadeOut(300);
-	                          	 }  
+	                          	    console.log(res.data.url,'测试')
+									$('#mengs').fadeOut(300);
+	                          	    window.location.href = res.data.url;
 	                          }else if(res.data.code=='302'){
 	                          	    $('#mengs').fadeOut(300);
 	                          	    localStorage.api_token = localStorage.api_token1;
@@ -296,32 +296,47 @@ margin-top: 1.466666rem;
 	                          	    console.log(localStorage.teacher_id)
 	                          	    localStorage.Classroom_ding_vuale = '';
 	                                localStorage.Classroom_id='';
-	                                
-                       	    	    window.setTimeout(()=>{
-                       	    		       location.href = './Classroomss.html'
-                       	    	    },1000)
-                                  
+									this.git_shenfen()//判断身份确定跳转至那个平台
 	                          }
         	    	}else{
         	    		vant.Toast('Something went wrong.(发生了错误 )');
         	    	}
-                }).catch(function(err){
+                }).catch(err=>{
                        console.log(err)
                 })
           },
+		  
+		 git_shenfen(){//获取身份
+		  	  axios.get('/api/class/user/teacher_role?api_token='+localStorage.api_token
+		  	    ).then(res=>{
+		  	    	if(res.status==200){
+		                        if(res.data.code=='200'){
+		                        	  console.log(res.data.data,'获取身份');
+									  localStorage.type_con = res.data.data;//储存身份
+		  						  if(res.data.data==0){
+		  							     window.location.href = 'http://ae-teacher.cieo.com.cn/teacher2/zihui/html/001.html'//跳转至教师端
+		  						  }else if(res.data.data==2){
+		  								 window.location.href = './classroom.html';  
+		  						  }else{
+									     window.location.href = './Classroomss.html';
+								  }
+		                          }else if(res.data.code=='404'){
+									     this.huoqu();
+								  }
+		  	    	 }
+		          }).catch(err=>{
+		                 console.log(err)
+		          })
+		  },
       },
       
       mounted(){
       	if(localStorage.teacher_id){
       		   localStorage.Classroom_ding_vuale = '';
 	           localStorage.Classroom_id='';
-      	 	   location.href = './Classroomss.html';
+			   this.git_shenfen()//判断身份确定跳转至那个平台
       	 }else{
-//    	   if(localStorage.api_token1){
-//    	   	    this.huoqu2();
-//    	   }else{
-      	   	    this.huoqu();
-//    	   }
+      	   	   this.huoqu();
       	 }
       },
     })

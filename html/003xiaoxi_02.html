@@ -281,10 +281,10 @@
       	document.getElementById('title').innerHTML = localStorage.titles
       	if(localStorage.titles=='退款记录'){
       		  this.type_img = 0
-      		  this.type_lei = '/api/course/trust-refunds?api_token=' 
+      		  this.type_lei = '/api/class/teacher/class-service/trust-refunds?api_token=' 
       	}else if(localStorage.titles=='请假记录'){
       		  this.type_img = 1
-      		  this.type_lei = '/api/course/trust-leave?api_token='
+      		  this.type_lei = '/api/class/teacher/course/trust-leave?api_token='
       	}
       	this.get_act()
       	document.getElementById('app').style.height = document.documentElement.clientHeight+'px';

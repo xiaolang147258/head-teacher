@@ -513,7 +513,7 @@
     	  transform: rotate(0deg)
     }
     .p_cal{
-    	 width: 5.5rem;
+    	 width: 6.2rem;
     	 height: 0.666666rem;
     	 float: right;
     	 margin-top: 0.153333rem;
@@ -525,7 +525,7 @@
     	  font-size: 0.32rem;
     	  color: rgba(153,153,153,1);
     	  float: right;
-    	  margin-right: 0.8rem;
+    	  margin-right: 0.4rem;
     }
   </style>
 </head>
@@ -550,19 +550,18 @@
   <div id="app" style="width: 100%;float: left;">
   	 <div class="top">
   	 	
-  	  <div  id="a1" style=" ">
+  	  <div id="a1">
      	 	<div class="shou">
   	  		<p id="inpp" v-show="inps" @click.stop="jiaos">搜索学生姓名</p>
   	  	  <img id="inpimg"  v-show="inps"  @click.stop="jiaos" src="../img/sousuo@3x.png" alt="" />
   	  		<input v-model="inpv" id="inp" @blur.prevent="changeCount_s()" @focus="inps=false" @input="changeCount()" type="text" @keyup="alertA($event)"/>
-  	  	</div>
-     	 </div>
+  	  	 </div>
+      </div>
      	 
        <div class="top_tabl">
        	   <div @click="c_date" class="top_tabl_c1">{{date_ss}}</div>
        	   <div @click="show2=!show2" class="top_tabl_c2"><img :class="{img_xuan:show2,img_xuans:show2==false}" src="../img/shouqi@2x.png" /><p>{{ding_vuale}}</p></div>
        </div>  
-  	  
   	</div>
   	 
   	<!--描述：弹出日期选择器-->
@@ -585,10 +584,8 @@
        
      </div>
     </mu-fade-transition>
-    <!---->
-    
     <!--考勤选择器-->
-    <van-popup style='' v-model="show2" position="bottom" :overlay="false">
+    <van-popup v-model="show2" position="bottom" :overlay="true">
              <van-picker
               show-toolbar
               title=""
@@ -598,11 +595,8 @@
               />
        </van-popup>
     
-    
-    
-    
       <!--没有数据时-->
-       <div id="rong_c" v-if="false">
+       <div id="rong_c" v-if="show_false">
    	   	   <div style=" width:3.3rem;height: 2.857142rem;margin:0 auto"> <img src="../img/banwu_img/meiyoukecheng.png"/> </div>
    	   	   	<p style="font-size: 0.4rem;color:#999999;margin-top: 0.585714rem;">暂时没有考勤记录～</p>
    	   </div>
@@ -611,8 +605,8 @@
   	 <div v-else>
   	  <ul id="uls">
   	   	  <div class="p_bs" ></div>
-  	   	  <li v-for='(i,index) in active' @click='cehua(index,i.initials)' class="li_ac" >
-  	   	  	 <p class="pass" :class="{psa:li_ac==index}">{{i.initials}}</p>
+  	   	  <li v-for='(i,index) in active'  @click='cehua(index,i.initials)' class="li_ac" >
+  	   	  	 <p class="pass" :class="{psa:li_ac==index}">{{i.initials==''?'*':i.initials}}</p>
   	   	  </li>
   	   </ul>
   	  
@@ -622,69 +616,45 @@
   	  	  <div class="img_box"><img src="../img/lixiaomeng@2x.png"/></div>
   	  	  <p class="name">{{j.surname}}</p>
   	  	  
-  	  	<div class="p_cal">
-  	  	  <span v-if="j.type_id==1">
+  	  	<div class="p_cal" v-for="(k,l) in j.check">
+  	  	  <span v-if="k.check=='出勤'">
   	  	  	 <p style="color: #4FC6CB;" class="ps">出勤</p>
   	  	     <img class="img_tai" src="../img/zhengchangchuqin@3x.png"/>
   	  	  </span>
-  	  	  <span v-else-if="j.type_id==6">
+  	  	  <span v-else-if="k.check=='早退'">
   	  	  	 <p style="color: #A4CC59;" class="ps">早退</p>
   	  	     <img class="img_tai" src="../img/zaotui@2x.png"/>
   	  	  </span>
-  	  	   <span v-else-if="j.type_id==5">
+  	  	   <span v-else-if="k.check=='旷课'">
   	  	  	 <p style="color: #E67BC9;" class="ps">旷课</p>
   	  	     <img class="img_tai" src="../img/kuangke@3x.png"/>
   	  	  </span>
-  	  	   <span v-else-if="j.type_id==3">
+  	  	   <span v-else-if="k.check=='缺勤'">
   	  	  	 <p style="color:rgba(79, 203, 141, 1);" class="ps">缺勤</p>
   	  	     <img class="img_tai" src="../img/gerenkaoqin/que.png"/>
   	  	  </span>
-  	  	   <span v-else-if="j.type_id==4">
+  	  	   <span v-else-if="k.check=='公病'">
   	  	  	 <p style="color:rgba(252, 97, 97, 1)" class="ps">公病</p>
   	  	     <img class="img_tai" src="../img/gerenkaoqin/zhengchangchuqin.png"/>
   	  	  </span>
-  	  	   <span v-else-if="j.type_id==2">
+  	  	   <span v-else-if="k.check=='迟到'">
   	  	  	 <p style="color: #EDB22C;" class="ps">迟到</p>
   	  	     <img class="img_tai" src="../img/chidao@3x.png"/>
   	  	  </span>
-  	  	    <p class="kesi">第一课时</p>
+		  <span v-else-if="k.check=='私假'">
+		  	 <!-- <p style="color: #EDB22C;" class="ps">私假</p> -->
+		     <img class="img_tai" style="width:1.56rem;margin-right:1.066666rem;" src="../img/sijia.png"/>
+		  </span>
+  	  	    <p class="kesi">{{k.title}}</p>
   	  	</div>  
-  	  	  
-  	  	 <div class="p_cal">
-  	  	  <span v-if="j.type_id==1">
-  	  	  	 <p style="color: #4FC6CB;" class="ps">出勤</p>
-  	  	     <img class="img_tai" src="../img/zhengchangchuqin@3x.png"/>
-  	  	  </span>
-  	  	  <span v-else-if="j.type_id==6">
-  	  	  	 <p style="color: #A4CC59;" class="ps">早退</p>
-  	  	     <img class="img_tai" src="../img/zaotui@2x.png"/>
-  	  	  </span>
-  	  	   <span v-else-if="j.type_id==5">
-  	  	  	 <p style="color: #E67BC9;" class="ps">旷课</p>
-  	  	     <img class="img_tai" src="../img/kuangke@3x.png"/>
-  	  	  </span>
-  	  	   <span v-else-if="j.type_id==3">
-  	  	  	 <p style="color:rgba(79, 203, 141, 1);" class="ps">缺勤</p>
-  	  	     <img class="img_tai" src="../img/gerenkaoqin/que.png"/>
-  	  	  </span>
-  	  	   <span v-else-if="j.type_id==4">
-  	  	  	 <p style="color:rgba(252, 97, 97, 1)" class="ps">公病</p>
-  	  	     <img class="img_tai" src="../img/gerenkaoqin/zhengchangchuqin.png"/>
-  	  	  </span>
-  	  	   <span v-else-if="j.type_id==2">
-  	  	  	 <p style="color: #EDB22C;" class="ps">迟到</p>
-  	  	     <img class="img_tai" src="../img/chidao@3x.png"/>
-  	  	  </span>
-  	  	    <p class="kesi">第二课时</p>
-  	  	</div>  
-  	  	 
-  	  	  
-  	  	  
-  	   </div>	  
-  	   
+  	   </div>	
       </div> 
      </div>
-    
+     <van-popup v-model="show_xxs" style='background:rgba(0,0,0,0.02)'>
+     	<div>
+     		  <van-loading size='50'/>
+     	</div>
+     </van-popup>
   </div>
 </body>
 
@@ -697,8 +667,9 @@
       
       data: function(){
         return {
+			show_xxs:false,
         	show_false:false,
-        	topTable:['全部考勤','出勤','迟到','请假','病/公','旷课','早退'],
+        	topTable:['全部考勤','出勤','迟到','私假','病/公','旷课','早退'],
         	index_o:0,
         	biaos:'全部',
         	leixing_box:['全部','课时（7:30-11:15）','课时（2:40-5:15）'],
@@ -750,6 +721,10 @@
       	onConfirm(value,index){//用户筛选考勤时点击确认
              this.ding_vuale = value;
              this.show2=false;
+			 console.log(index);
+			 localStorage.index = index;
+			 this.show_xxs = true;
+			 this.get_active(localStorage.api_token,localStorage.name,this.date_ss,localStorage.index,this.inpv);
          },
       	
       	onCancel(){
@@ -790,8 +765,9 @@
       		   	 	   		       }
       		        }
       		
-      		
       		 this.date_ss = this.create_date.getFullYear()+'-'+yue+'-'+ri;
+			 this.show_xxs = true;
+			 this.get_active(localStorage.api_token,localStorage.name,this.date_ss,localStorage.index,this.inpv);
       		 this.show3s = false;
       		 window.setTimeout(()=>{
       		 	   this.show3 = false;  
@@ -805,25 +781,7 @@
       	
       	
         new_dates(){//获取今天的时间
-       	  var yue = new Date().getMonth()+1
-       	  var ri = new Date().getDate();
-       	          if(yue<10){
-      		   	     		       if((yue+'').length<2){
-	                 		       if(typeof(yue) == 'string'){
-	                 	      		       yue.replace(new RegExp('0'), "")
-	                    		       }
-      		   	 	   		        yue = '0'+yue
-      		   	 	   		       }
-      		        }
-      		         if(ri<10){
-      		   	     		       if((ri+'').length<2){
-	                 		       if(typeof(ri) == 'string'){
-	                 	      		       ri.replace(new RegExp('0'), "")
-	                    		       }
-      		   	 	   		        ri = '0'+ri
-      		   	 	   		       }
-      		        }
-       	  this.date_ss = new Date().getFullYear()+'-'+yue+'-'+ri;
+       	  this.date_ss = localStorage.dates;
         },
       	
       	alertA(ev){
@@ -835,48 +793,52 @@
 //    			   	  this.get_active(localStorage.api_token,localStorage.trust_classes_check_id,0,this.inpv);
 //    			   }
       			    
-      			   
       		  }
       		},
       	changeCount_s(){
       		  this.inpv==''?this.inps=true:this.inps=false; 
-      		  this.get_active(localStorage.api_token,localStorage.trust_classes_check_id,this.da,this.inpv);
+			  this.show_xxs = true;
+			  this.get_active(localStorage.api_token,localStorage.name,this.date_ss,localStorage.index,this.inpv);
       	},
-      	get_active(api_token,trust_classes_check_id,keywords,name){//获取数据函数
-      		console.log(api_token)
-      		console.log(trust_classes_check_id)
-      		console.log(keywords)
-      		console.log(name)
-      		
-      		 axios.get(Main_domain_name+'/api/course/course-check-view?api_token='+api_token+'&type_id='+keywords+'&trust_course_check_id='+trust_classes_check_id+'&keywords='+name
+		
+      	get_active(api_token,name,dates,index,student){//获取数据函数
+//       		console.log(api_token)
+//       		console.log(name)
+//       		console.log(dates);
+// 			console.log(index);
+			$('title').html(name);
+			this.ding_vuale = this.topTable[Number(index)];
+			
+      		 axios.get(Main_domain_name+'/api/class/teacher/getClassCheckInfo?api_token='+api_token+'&class='+name+'&date='+dates+'&type_id='+index+'&student='+student
         	      ).then(res=>{
         	      	 if(res.data.code==200){
         	      	 	
-        	      	 	   console.log(res.data);
+        	      	 	   console.log(res.data.data,'数据');
         	      	 	   
-        	      	 	   if(res.data.data.StudentList.length!=0){
-        	      	 	   	     this.show_false = false
-        	      	 	   	     this.active = res.data.data.StudentList
+        	      	 	   if(res.data.data.length!=0){
+        	      	 	   	     this.show_false = false;
+        	      	 	   	     this.active = res.data.data;
         	      	 	   }else{
-        	      	 	   	     this.show_false = true
+        	      	 	   	     this.show_false = true;
+								 this.active = res.data.data;
         	      	 	   }
-        	      	 	   
+						   this.show_xxs = false;
         	      	 	   $('#mengs').fadeOut(300);
-        	      	 	   
         	      	 }else{
         	      		  vant.Toast('Something went wrong.(发生了错误 )');
+						  this.show_xxs = true;
         	      	 }
                 }).catch(err=>{
                       console.log(err);
+					  vant.Toast('Something went wrong.(发生了错误 )');
+					  this.show_xxs = true;
                 });
       	},
       	
       	
       	handleScroll(){//监测滑动，使右侧li同步到指定字母位置
-            var a = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
-            
-            let len = $('.shi').length-1
-            
+            var a = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+            let len = $('.shi').length-1;
             for (; len > -1; len--){
             	   if(a>=$('.shi').eq(len).offset().top-($('#a1').height()+8)){
             	   	   this.li_ac = len
@@ -884,7 +846,6 @@
             	   	   break
             	   }
              }
-            
          },
          destroyed () {//移除页面监听--跳转其他页面务必调用该事件
            window.removeEventListener('scroll', this.handleScroll)
@@ -967,24 +928,7 @@
 //                return value;
               },
              
-      	clicktab(i,index){
-      		    this.da = index;
-      		    this.title = i;
-      		    console.log(index);
-      		    
-      		    if(index==0){
-      		    	  this.get_active(localStorage.api_token,localStorage.trust_classes_check_id,index,'')
-      		    }else{
-      		    	  var a = index;
-      		        this.get_active(localStorage.api_token,localStorage.trust_classes_check_id,a,name)
-      		    }
-      		    this.inpv = ''
-      		    
-//    		   if(i=='其他月份'){
-//         	  this.show4 = true;
-//         	  this.show3 = false;
-//    		   }
-      	},
+      
       	riqi(){
            	 this.show4 = false;
            },
@@ -1019,8 +963,9 @@
       	   this.titles()
       	   this.ios_and();
       	   this.Initialization_time();
-      	   this.new_dates()
-      	   this.get_active(localStorage.api_token,localStorage.trust_classes_check_id,localStorage.keywords,'');
+      	   this.new_dates();
+		   
+      	   this.get_active(localStorage.api_token,localStorage.name,localStorage.dates,localStorage.index,'');
       	    
 //          this.get_active(localStorage.api_token,'2',localStorage.keywords);
       	   //添加页面滑动监听
@@ -1029,7 +974,7 @@
 //    	   document.getElementById('rong_c').style.height = document.documentElement.clientHeight+'px';
 //    	   $('#rong_c').css('height',$('body').height());
 
-           this.ding_vuale = this.topTable[0];
+           // this.ding_vuale = this.topTable[0];
            
       },
       

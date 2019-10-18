@@ -512,9 +512,8 @@
     <div id="app" style="width: 100%;float: left;background: #F5F5F5;">
     	
   	  <div  id="tops">
-  	 	<div id="imgx" style="width:4.8rem;height: 2rem;margin: auto;position: relative;">
-  	 		  
-  	 	    <img @click="dat"  :class="top==1?'top_img':'top_i'" style="position: absolute;left: 0;" src="../img/banwu_img/hudongjiaoliu_xiao.png" alt="" />
+  	 	<div id="imgx" style="width:2.4rem;height: 2rem;margin: auto;position: relative;">
+  	 	    <!-- <img @click="dat"  :class="top==1?'top_img':'top_i'" style="position: absolute;left: 0;" src="../img/banwu_img/hudongjiaoliu_xiao.png" alt="" /> -->
   	 	    <img @click="dal" :class="top==2?'top_img':'top_i'" style="position: absolute;right: 0;" src="../img/banwu_img/kaoqingjilv_xaio.png" alt="" />	
   	 	</div>
   	 	
@@ -555,21 +554,21 @@
        </van-popup>
    
     <div class="kaoqins" v-for="(i,index) in active_s">
-    	  <div class="kaoqins_top">{{i[1]}}（共{{i[0].studentCount}}人）</div>
-    	  <div v-if="i[0].type[1].count==0&&i[0].type[2].count==0&&i[0].type[3].count==0&&i[0].type[4].count==0&&i[0].type[5].count==0&&i[0].type[6].count==0" class="kaoqins_top2">
-    	  	<img src="../img/gerenkaoqin/meike.png"/><p style="margin-top:1.053333rem;float: left;">当天没有课程～</p>
+    	  <div class="kaoqins_top">{{i.classtitle}}（共{{i.info.studentCount}}人）</div>
+    	  <div v-if="i.info.type[1].count==0&&i.info.type[2].count==0&&i.info.type[3].count==0&&i.info.type[4].count==0&&i.info.type[5].count==0&&i.info.type[6].count==0" class="kaoqins_top2">
+    	  	<img src="../img/gerenkaoqin/meike.png"/><p style="margin-top:1.053333rem;float: left;">当天没有考勤～</p>
     	  </div>
-    	  <div v-else class="kaoqins_top2" @click="ja1">
-    	  	  <div class="kaoqins_top2_c"><p style="color:rgba(79,198,203,1);font-size:0.426666rem;">{{i[0].type[1].count}}</p><p>出勤</p></div>
-    	  	  <div class="kaoqins_top2_c"><p style="color:rgba(237,178,44,1);font-size:0.426666rem;">{{i[0].type[2].count}}</p><p>迟到</p></div>
-    	  	  <div class="kaoqins_top2_c"><p style="color:rgba(252,97,97,1);font-size:0.426666rem;">{{i[0].type[4].count}}</p><p>公病</p></div>
-    	  	  <div class="kaoqins_top2_c"><p style="color:rgba(103,134,237,1);font-size:0.426666rem;">{{i[0].type[3].count}}</p><p>私假</p></div>
-    	  	  <div class="kaoqins_top2_c"><p style="color:rgba(164,204,89,1);font-size:0.426666rem;">{{i[0].type[6].count}}</p><p>早退</p></div>
-    	  	  <div class="kaoqins_top2_c"><p style="color:rgba(230,123,201,1);font-size:0.426666rem;">{{i[0].type[5].count}}</p><p>旷课</p></div>
+    	  <div v-else class="kaoqins_top2" >
+    	  	  <div @click="ja1(1,i.classid)" class="kaoqins_top2_c"><p style="color:rgba(79,198,203,1);font-size:0.426666rem;">{{i.info.type[1].count}}</p><p>出勤</p></div>
+    	  	  <div @click="ja1(2,i.classid)" class="kaoqins_top2_c"><p style="color:rgba(237,178,44,1);font-size:0.426666rem;">{{i.info.type[2].count}}</p><p>迟到</p></div>
+    	  	  <div @click="ja1(4,i.classid)" class="kaoqins_top2_c"><p style="color:rgba(252,97,97,1);font-size:0.426666rem;">{{i.info.type[4].count}}</p><p>公病</p></div>
+    	  	  <div @click="ja1(3,i.classid)" class="kaoqins_top2_c"><p style="color:rgba(103,134,237,1);font-size:0.426666rem;">{{i.info.type[3].count}}</p><p>私假</p></div>
+    	  	  <div @click="ja1(6,i.classid)" class="kaoqins_top2_c"><p style="color:rgba(164,204,89,1);font-size:0.426666rem;">{{i.info.type[6].count}}</p><p>早退</p></div>
+    	  	  <div @click="ja1(5,i.classid)" class="kaoqins_top2_c"><p style="color:rgba(230,123,201,1);font-size:0.426666rem;">{{i.info.type[5].count}}</p><p>旷课</p></div>
     	  </div>	 
     </div>
     
-    <div style="width: 100%;height:1.306666rem;"></div>
+    <div style="width:100%;height:1.306666rem;"></div>
     
    <!--描述：弹出下拉选项蒙层-->
    <mu-fade-transition>
@@ -590,7 +589,7 @@
        
      </div>
     </mu-fade-transition>
-    
+        
        <div v-show="show_false==false&&active_s.length>3" style="width:100%;height:0.5rem;font-size:0.4rem;line-height:0.5rem;color:rgb(153, 153, 153);text-align:center;float:left;">
        	   已经到底了...
        </div>
@@ -612,14 +611,9 @@
     	<div @click="xiaos" style="float: right;"><img style="width: 0.52rem;height: 0.493333rem;" src="../img/xiaoxi_hui@2x.png" alt="" /><p style="color: #999999;">消息</p></div>	
        </div>
      </div>
-      
       <van-popup v-model="show_xxs" style='background:rgba(0,0,0,0.02)'>
-  	  	<div style="">
-  	  		  <van-loading size='50'/>
-  	  	</div>
+  	  	<div><van-loading size='50'/></div>
   	  </van-popup>
-      
-      
   </div>
 </body>
    <script type="text/javascript" src="../js/jq.js"></script>
@@ -627,18 +621,16 @@
    <script src="../js/vuex.js"></script>
    
   <!--手机端打印错误--> 
-   <!--<script src="//cdn.bootcss.com/eruda/1.4.2/eruda.min.js"></script>
-   <script>eruda.init();</script>-->
+   <!-- <script src="//cdn.bootcss.com/eruda/1.4.2/eruda.min.js"></script>
+   <script>eruda.init();</script> -->
    
    
   <script>
   
-  	
-  	
   	//控制微信浏览器回退按钮，跳转至指定页面
   	pushHistory();
         window.addEventListener("popstate",function(e){
-            location.href='./002ban_wu.html'
+            location.href='./002banwu_kaoqin.html'
         });
         function pushHistory(){
         var state = { 
@@ -720,10 +712,8 @@
       	nuse_dates(date){//用户点击一次选择考勤时间
       		 let a = date;
       		 this.create_date = date;
-      		
       	},
       	
-      
       	xiaos(){
       		this.destroyed()
       		location.href ='./003xiaoxi.html'
@@ -731,8 +721,11 @@
       	
       	ke_tang(){
       	 	 this.destroyed()
-      	 	 location.href = './Classroomss.html'
-      	 	 
+			 if(localStorage.type_con==1){
+				 location.href = './Classroomss.html'
+			 }else if(localStorage.type_con==2){
+				 location.href = './classroom.html'  
+			 }
       	 },
       	
       	confirms(value){
@@ -758,7 +751,6 @@
       		        }
       		        this.getCountDays(this.maths);//获取一个月有多少天
       		        this.title_date =  (this.yer+'').substring(2,4)+'年'+this.maths+'月'+this.dates+'日'
-      		        
       		        if(this.maths<10){
       		   	     		       if((this.maths+'').length<2){
 	                 		       if(typeof(this.maths) == 'string'){
@@ -775,9 +767,7 @@
       		   	 	   		        this.dates = '0'+this.dates
       		   	 	   		       }
       		        }
-      		        
       		        this.currentDate = this.yer+'-'+ this.maths+'-'+this.dates
-      		       
       	},
       	
       	top_date(i){
@@ -819,21 +809,18 @@
       		   	  this.nianyue()
       		   }else if(i=='本月'){
       		   	  this.new_date()
-      		   	  this.show_xxs = true
+      		   	  this.show_xxs = true;
       		   	  this.get_actives()
       		   	  this.show3 = false;
-      		   	  this.searchBarFixed = false
+      		   	  this.searchBarFixed = false;
       		   }
       	},
       	
-      	ja1(){
-//    		localStorage.title=index==1?'出勤':(index==2?'迟到':(index==3?'请假':(index==4?'病/公':(index==5?"旷课":(index==6?'早退':'')))));
-//    		localStorage.trust_classes_check_id = i.id
-//    		localStorage.keywords = index
-      		
-//    		console.log(localStorage.keywords)
-      		
-      		this.destroyed()
+      	ja1(index,name){
+      		localStorage.index = index;
+			localStorage.name = name;
+			localStorage.dates = this.currentDate;//将时间戳转为秒
+      		this.destroyed();
       		location.href='002banwu_kaoqin2.html'
       	},
       	
@@ -855,21 +842,15 @@
              } else {
                this.searchBarFixed = false
              }
-             
              var aer = document.getElementsByClassName('tiao')
              var window_top = document.documentElement.clientHeight-33
-
-//           console.log(Math.trunc(aer[aer.length-1].getBoundingClientRect().bottom),'----------',window_top);
-             
          },
          destroyed () {//移除页面监听--跳转其他页面务必调用该事件
            window.removeEventListener('scroll', this.handleScroll)
          },
-         
           onRefresh(){//下拉刷新事件
           	 this.get_actives();
           },
-          
           tan(){
           	 this.show3 = true;
           	 window.setTimeout(()=>{
@@ -918,21 +899,22 @@
           get_actives(){
           	 this.pages = 1;
           	 this.date_get();
-          	 console.log(this.currentDate);
+			 
+			 console.log(this.currentDate);
+			 
           	 var ban = this.ding_vuale=='全部班级'?'':this.ding_vuale;
-      		   axios.get(Main_domain_name+'/api/class/teacher/checklistinfo?time='+((new Date(this.currentDate).getTime())/1000)+'&class='+ban+'&api_token='+localStorage.api_token+'&page='+this.pages
+      		   axios.get(Main_domain_name+'/api/class/teacher/checklistinfo?time='+this.currentDate+'&class='+ban+'&api_token='+localStorage.api_token+'&page='+this.pages
         	      ).then(res=>{
         	      	 if(res.data.code==200){
         	      	 	    console.log(res.data.data,'数据');
         	      	 	   if(res.data.data.length==0){
         	      	 	   	   this.show_false = true
         	      	 	   }else{
-        	      	 	   	   this.show_false = false
-        	      	 	   	   console.log(res.data.data) 
+        	      	 	   	   this.show_false = false;
         	      	 	   	   this.active_s = res.data.data;
         	      	 	   	   this.ren_shu = 0;
         	      	 	   	   for(var i=0;i<this.active_s.length;i++){//获取总人数
-        	      	 	   	   	   this.ren_shu+=this.active_s[i][0].studentCount;
+        	      	 	   	   	   this.ren_shu+=this.active_s[i].info.studentCount;
         	      	 	   	   }
         	      	 	   }
         	      	 	   this.show_xxs = false;
@@ -944,7 +926,7 @@
         	      		  console.log(localStorage.api_token);
         	      		  window.setTimeout(()=>{
                        	    		  location.href = './001.html'
-                       },300)
+                          },300)
         	      	}
                 }).catch(err=>{
                       console.log(err);
@@ -981,6 +963,7 @@
         	      	 	    	    duration:5000
         	      	 	    });
               });
+			  
       	  },
       },
       mounted(){
